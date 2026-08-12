@@ -24,6 +24,7 @@ export default function Inicio() {
       scrollTrigger: {
         trigger: sectionRef.current,
         start: 'top 82%',
+        invalidateOnRefresh: true,
       },
     });
 

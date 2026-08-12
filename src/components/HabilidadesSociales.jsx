@@ -138,6 +138,7 @@ export default function HabilidadesSociales() {
       scrollTrigger: {
         trigger: sectionRef.current,
         start: 'top 78%',
+        invalidateOnRefresh: true,
       },
     });
 

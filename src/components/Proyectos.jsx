@@ -136,6 +136,7 @@ export default function Proyectos() {
       scrollTrigger: {
         trigger: sectionRef.current,
         start: 'top 78%',
+        invalidateOnRefresh: true,
       },
     });
 

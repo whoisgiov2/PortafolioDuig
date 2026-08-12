@@ -22,6 +22,7 @@ export default function Footer() {
             trigger: footerRef.current,
             start: 'top 95%',
             fastScrollEnd: true,
+            invalidateOnRefresh: true,
           },
         }
       );

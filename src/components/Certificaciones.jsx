@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { SplitText } from 'gsap/SplitText';
@@ -86,11 +86,34 @@ const STATE_META = [
 export default function Certificaciones() {
   const [viewState, setViewState]   = useState(0);
   const [activeCard, setActiveCard] = useState(null);
+  const [isMobile, setIsMobile]     = useState(() =>
+    typeof window !== 'undefined' ? window.innerWidth < 768 : false
+  );
 
   const sectionRef = useRef(null);
   const headerRef  = useRef(null);
   const titleRef   = useRef(null);
   const wrapperRef = useRef(null);
+
+  /* ── Responsive window resize listener for 3D carousel geometry ── */
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  /* ── Body Scroll Lock when Modal is Active ── */
+  useEffect(() => {
+    if (activeCard !== null) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [activeCard]);
 
   /* ── Cycle states on scene click (or close modal if open) ── */
   const handleSceneClick = () => {
@@ -115,6 +138,7 @@ export default function Certificaciones() {
       scrollTrigger: {
         trigger: sectionRef.current,
         start: 'top 80%',
+        invalidateOnRefresh: true,
       },
     });
 
@@ -146,7 +170,7 @@ export default function Certificaciones() {
   }, { scope: sectionRef });
 
   return (
-    <div ref={sectionRef} className="max-w-5xl mx-auto w-full overflow-x-hidden">
+    <div ref={sectionRef} className="max-w-5xl mx-auto w-full my-16 overflow-x-hidden">
 
       {/* ── Section header ── */}
       <div ref={headerRef} data-speed="1.1" className="mb-10 text-right will-change-transform">
@@ -194,57 +218,66 @@ export default function Certificaciones() {
             className="cert-ring"
             style={{ '--n': TOTAL }}
           >
-            {CERTS.map((cert, i) => (
-              <div
-                key={cert.id}
-                tabIndex={0}
-                role="button"
-                aria-label={`Ver detalle de certificación: ${cert.name}`}
-                onClick={(e) => handleCardClick(i, e)}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    handleCardClick(i, e);
-                  }
-                }}
-                className="cert-card-3d outline-none focus-visible:ring-2 focus-visible:ring-white/80 focus-visible:ring-offset-4 focus-visible:ring-offset-black rounded-2xl"
-                style={{ '--i': i, '--n': TOTAL }}
-              >
-                <div className="cert-card-inner">
+            {CERTS.map((cert, i) => {
+              const angle = (360 / TOTAL) * i;
+              const radius = isMobile ? 290 : 420;
 
-                  {/* Monospace ID badge */}
-                  <span className="font-mono text-[8px] tracking-[0.4em] uppercase text-neutral-400">
-                    {cert.id}
-                  </span>
+              return (
+                <div
+                  key={cert.id}
+                  tabIndex={0}
+                  role="button"
+                  aria-label={`Ver detalle de certificación: ${cert.name}`}
+                  onClick={(e) => handleCardClick(i, e)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      handleCardClick(i, e);
+                    }
+                  }}
+                  className="cert-card-3d w-[190px] md:w-[320px] outline-none focus-visible:ring-2 focus-visible:ring-white/80 focus-visible:ring-offset-4 focus-visible:ring-offset-black rounded-2xl"
+                  style={{
+                    transform: `rotateY(${angle}deg) translateZ(${radius}px)`,
+                    '--i': i,
+                    '--n': TOTAL,
+                  }}
+                >
+                  <div className="cert-card-inner p-3.5 md:p-6">
 
-                  {/* Cert name */}
-                  <h3 className="text-[11px] font-bold tracking-tight text-neutral-200 leading-snug mt-1">
-                    {cert.name}
-                  </h3>
-
-                  {/* Description — visible in static reading state 2 */}
-                  {viewState === 2 && (
-                    <p className="text-[10px] text-neutral-400 leading-relaxed mt-1 line-clamp-3">
-                      {cert.desc}
-                    </p>
-                  )}
-
-                  {/* Footer: issuer + year */}
-                  <div className="mt-auto pt-3 flex flex-col gap-1">
-                    <span className="font-mono text-[8px] tracking-[0.3em] uppercase text-neutral-500">
-                      {cert.issuer}
+                    {/* Monospace ID badge */}
+                    <span className="font-mono text-[9px] md:text-xs tracking-[0.3em] uppercase text-neutral-400">
+                      {cert.id}
                     </span>
-                    <div className="flex items-center justify-between">
-                      <span className="font-mono text-[8px] text-neutral-400">{cert.year}</span>
-                      <span className="font-mono text-[8px] tracking-[0.2em] uppercase text-neutral-400 group-hover:text-white transition-colors duration-300">
-                        Detalle ↗
-                      </span>
-                    </div>
-                  </div>
 
+                    {/* Cert name */}
+                    <h3 className="text-sm md:text-lg font-bold tracking-tight text-neutral-200 leading-tight mt-1 line-clamp-2 break-words">
+                      {cert.name}
+                    </h3>
+
+                    {/* Description — visible in static reading state 2 */}
+                    {viewState === 2 && (
+                      <p className="text-[10px] md:text-xs text-neutral-400 leading-relaxed mt-1.5 line-clamp-3">
+                        {cert.desc}
+                      </p>
+                    )}
+
+                    {/* Footer: issuer + year */}
+                    <div className="mt-auto pt-2.5 flex flex-col gap-1">
+                      <span className="font-mono text-[9px] md:text-xs tracking-[0.25em] uppercase text-neutral-500">
+                        {cert.issuer}
+                      </span>
+                      <div className="flex items-center justify-between">
+                        <span className="font-mono text-[9px] md:text-xs text-neutral-400">{cert.year}</span>
+                        <span className="font-mono text-[9px] md:text-xs tracking-[0.2em] uppercase text-neutral-400 group-hover:text-white transition-colors duration-300">
+                          Detalle ↗
+                        </span>
+                      </div>
+                    </div>
+
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
 
@@ -288,11 +321,11 @@ export default function Certificaciones() {
             </button>
 
             {/* Monospace ID Badge */}
-            <div className="flex items-center gap-3 mb-3">
-              <span className="font-mono text-[10px] tracking-[0.4em] uppercase text-white border border-white/30 rounded-full px-3 py-1 bg-white/10 font-semibold">
+            <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-3">
+              <span className="font-mono text-xs sm:text-[10px] tracking-[0.2em] sm:tracking-[0.4em] uppercase text-white border border-white/30 rounded-full px-2 py-1 sm:px-3 sm:py-1 bg-white/10 font-semibold">
                 {CERTS[activeCard].id}
               </span>
-              <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-neutral-400">
+              <span className="font-mono text-xs sm:text-[10px] tracking-[0.15em] sm:tracking-[0.2em] uppercase text-neutral-400">
                 CREDENTIAL VERIFIED
               </span>
             </div>

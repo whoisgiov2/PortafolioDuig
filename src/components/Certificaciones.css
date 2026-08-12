@@ -67,14 +67,9 @@
 /* ── 8 Individual Cards positioned around the 3D ring ─────── */
 .cert-card-3d {
   position: absolute;
-  width: 220px;
-  margin-left: -110px;
+  width: 320px;
+  margin-left: -160px;
   margin-top: -110px;
-
-  /* 3D Cylindrical positioning math */
-  transform:
-    rotateY(calc(360deg / var(--n) * var(--i)))
-    translateZ(330px);
 
   transform-style: preserve-3d;
   will-change: transform;
@@ -166,22 +161,19 @@
 }
 
 /* ── Mobile Responsive 3D Geometry Adjustment ─────────────── */
-@media (max-width: 640px) {
+@media (max-width: 768px) {
   .cert-scene {
-    height: 360px;
-    perspective: 750px;
+    height: 420px;
+    perspective: 1000px;
   }
   .cert-card-3d {
-    width: 140px;
-    margin-left: -70px;
-    margin-top: -80px;
-    transform:
-      rotateY(calc(360deg / var(--n) * var(--i)))
-      translateZ(155px);
+    width: 190px;
+    margin-left: -95px;
+    margin-top: -90px;
   }
   .cert-card-inner {
-    padding: 12px;
-    min-height: 160px;
+    padding: 14px 12px;
+    min-height: 175px;
     border-radius: 14px;
   }
 }

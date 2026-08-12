@@ -53,6 +53,7 @@ export default function ContactoSeguro() {
       scrollTrigger: {
         trigger: sectionRef.current,
         start: 'top 78%',
+        invalidateOnRefresh: true,
       },
     });
 
