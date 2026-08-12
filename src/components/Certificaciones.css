@@ -1,0 +1,187 @@
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   CERTIFICACIONES — 3D Orbital Carousel & 2D Focus Modal
+   Mathematical 3D Ring (N = 8 Cards, R = 330px, Step = 45deg)
+   100% Monochromatic Silver & White High-End Design
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+/* ── Outer scene: perspective container ── */
+.cert-scene {
+  perspective: 1000px;
+  perspective-origin: 50% 48%;
+  width: 100%;
+  height: 540px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), filter 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Dim & blur background 3D ring when 2D modal is open */
+.cert-scene.has-active-card {
+  opacity: 0.12;
+  filter: blur(8px);
+  pointer-events: none;
+}
+.cert-scene.has-active-card .cert-ring {
+  animation-play-state: paused !important;
+}
+
+/* ── Ring: 3D space origin point ── */
+.cert-ring {
+  position: relative;
+  width: 0;
+  height: 0;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+/* ══ State 0 ── Flat orbital spin (28s loop) ═════════════════ */
+.cert-scene.state-0 .cert-ring {
+  animation: ringFlat 28s linear infinite;
+}
+
+/* ══ State 1 ── Isometric tilt (-14deg X) + spin ═════════════ */
+.cert-scene.state-1 .cert-ring {
+  animation: ringTilted 20s linear infinite;
+}
+
+/* ══ State 2 ── Paused static reading mode ═══════════════════ */
+.cert-scene.state-2 .cert-ring {
+  animation-play-state: paused !important;
+}
+
+/* ── Ring Rotation Keyframes ──────────────────────────────── */
+@keyframes ringFlat {
+  from { transform: rotateY(0deg);   }
+  to   { transform: rotateY(360deg); }
+}
+
+@keyframes ringTilted {
+  from { transform: rotateX(-14deg) rotateY(0deg);   }
+  to   { transform: rotateX(-14deg) rotateY(360deg); }
+}
+
+/* ── 8 Individual Cards positioned around the 3D ring ─────── */
+.cert-card-3d {
+  position: absolute;
+  width: 220px;
+  margin-left: -110px;
+  margin-top: -110px;
+
+  /* 3D Cylindrical positioning math */
+  transform:
+    rotateY(calc(360deg / var(--n) * var(--i)))
+    translateZ(330px);
+
+  transform-style: preserve-3d;
+  will-change: transform;
+  transition: transform 0.4s ease;
+  cursor: pointer;
+}
+
+/* ── Inner card face — Frosted Slate dark aesthetics ──────── */
+.cert-card-inner {
+  background: rgba(18, 18, 18, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 18px;
+  padding: 22px;
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  min-height: 210px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow:
+    0 10px 36px rgba(0, 0, 0, 0.8),
+    0 1px 0px rgba(255, 255, 255, 0.05) inset;
+  transition:
+    border-color 0.35s ease,
+    box-shadow    0.35s ease,
+    background-color 0.35s ease,
+    transform 0.35s ease;
+}
+
+/* ── Pure Silver Spotlight Rule — All cards on hover ── */
+.cert-card-3d .cert-card-inner:hover {
+  border-color: rgba(255, 255, 255, 0.40);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.15),
+    0 0 30px rgba(255, 255, 255, 0.18),
+    0 0 65px rgba(255, 255, 255, 0.08),
+    0 8px 32px rgba(0, 0, 0, 0.85);
+  transform: translateY(-2px);
+}
+
+/* ── HUD state indicator dots ───────────────────────────────── */
+.cert-hud-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 9999px;
+  background: #333333;
+  transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+.cert-hud-dot.active {
+  background: #ffffff;
+  transform: scale(1.4);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+}
+
+/* ── Credly CTA link ────────────────────────────────────────── */
+.cert-credly-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'Menlo', 'Roboto Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: #737373;
+  transition: color 0.3s ease;
+  text-decoration: none;
+}
+.cert-credly-link:hover {
+  color: #ffffff;
+}
+
+/* ── Modal Entrance Animations ─────────────────────────────── */
+@keyframes modalBackdropFade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes modalCardPop {
+  from { opacity: 0; transform: scale(0.93) translateY(12px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.cert-modal-backdrop {
+  animation: modalBackdropFade 0.3s ease forwards;
+}
+
+.cert-modal-card {
+  animation: modalCardPop 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* ── Mobile Responsive 3D Geometry Adjustment ─────────────── */
+@media (max-width: 640px) {
+  .cert-scene {
+    height: 380px;
+  }
+  .cert-card-3d {
+    width: 160px;
+    margin-left: -80px;
+    margin-top: -95px;
+    transform:
+      rotateY(calc(360deg / var(--n) * var(--i)))
+      translateZ(190px);
+  }
+  .cert-card-inner {
+    padding: 14px;
+    min-height: 180px;
+    border-radius: 14px;
+  }
+}
+
