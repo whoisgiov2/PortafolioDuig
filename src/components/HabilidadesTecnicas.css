@@ -42,7 +42,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow: visible;                        /* ← CRÍTICO: permite que los SVGs salgan hacia arriba */
+  overflow: visible !important;             /* ← CRÍTICO: permite que los SVGs salgan hacia arriba sin clipping */
   transition: height 0.5s cubic-bezier(0.16, 1, 0.3, 1), z-index 0.3s ease;
   cursor: default;
   z-index: 1;
@@ -202,13 +202,13 @@
 
 .box .content h2 {
   font-family: 'Menlo', 'Roboto Mono', monospace;
-  font-size: 1.05rem;
+  font-size: 0.95rem;
   font-weight: 800;
   color: #ffffff;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   margin: 0;
-  line-height: 1.2;
+  line-height: 1.15;
 }
 
 .box .content p {
