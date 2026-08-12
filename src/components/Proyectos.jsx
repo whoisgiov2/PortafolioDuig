@@ -1,66 +1,134 @@
-import { useRef, useState, useCallback, useEffect } from 'react';
+import { useRef, useState, useEffect, useCallback } from 'react';
+import { createPortal } from 'react-dom';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { SplitText } from 'gsap/SplitText';
 import { useGSAP } from '@gsap/react';
+import './Proyectos.css';
 
 gsap.registerPlugin(useGSAP, ScrollTrigger, SplitText);
 
 const PROJECTS = [
   {
-    id: 'PRJ-001',
-    name: 'Resplandor',
-    tagline: 'Sistema de Monitoreo Cibernético',
-    desc: 'Plataforma de alto rendimiento para monitoreo y análisis cibernético en tiempo real, con capacidad de detección de anomalías e integración de múltiples fuentes de datos de seguridad.',
-    tags: ['Python', 'Linux', 'Seguridad'],
-    href: 'https://github.com/whoisgiov2/Resplandor',
-    year: '2025',
-    architecture: 'Motor Asíncrono · Análisis en Vivo',
+    id: 'PRJ-01',
+    number: '01',
+    name: 'Red Corporativa Full-Mesh',
+    category: 'NETWORKING & SEGURIDAD',
+    desc: 'Simulación en Cisco Packet Tracer con enrutamiento OSPF y túneles VPN IPsec entre nodos.',
+    tags: ['PACKET TRACER', 'OSPF', 'IPSEC VPN', 'CISCO'],
+    year: '2024',
+    href: 'https://github.com/whoisgiov2',
   },
   {
-    id: 'PRJ-002',
-    name: 'FoxSic',
-    tagline: 'Plataforma de Inteligencia de Amenazas',
-    desc: 'Plataforma táctica de ciberseguridad enfocada en la investigación de infraestructuras, reconocimiento de activos y análisis de superficie de ataque en entornos de red complejos.',
-    tags: ['OSINT', 'Bash', 'MySQL'],
-    href: 'https://github.com/whoisgiov2/FoxSic',
-    year: '2025',
-    architecture: 'Táctica Red · Reconocimiento OSINT',
+    id: 'PRJ-02',
+    number: '02',
+    name: 'Script de Preprocesamiento',
+    category: 'CIENCIA DE DATOS & ALGORITMOS',
+    desc: 'Módulos de análisis estadístico y filtros de limpieza de datos en Python para Teoría de la Información.',
+    tags: ['PYTHON', 'ESTADÍSTICA', 'FILTROS DE DATOS', 'INFO THEORY'],
+    year: '2024',
+    href: 'https://github.com/whoisgiov2',
+  },
+  {
+    id: 'PRJ-03',
+    number: '03',
+    name: 'Bóveda Cibernética',
+    category: 'ARQUITECTURA WEB & FRONTEND',
+    desc: 'Portafolio interactivo monocromático con físicas avanzadas en React y GSAP (este mismo proyecto).',
+    tags: ['REACT 19', 'GSAP 3', 'TAILWIND CSS', 'SMOOTH SCROLL'],
+    year: '2026',
+    href: 'https://github.com/whoisgiov2/PortafolioDuig',
   },
 ];
 
 export default function Proyectos() {
   const sectionRef = useRef(null);
-  const headerRef  = useRef(null);
-  const titleRef   = useRef(null);
-  const cardEls    = useRef([]);
-  const tooltipRef = useRef(null);
+  const headerRef = useRef(null);
+  const titleRef = useRef(null);
+  const listItemsRef = useRef([]);
+  const panelRef = useRef(null);
 
   const [activeProject, setActiveProject] = useState(null);
+  const [isTouch, setIsTouch] = useState(false);
+  const [expandedMobileId, setExpandedMobileId] = useState(null);
 
   const xToRef = useRef(null);
   const yToRef = useRef(null);
 
-  /* Initialize gsap.quickTo for smooth 60fps tooltip tracking */
+  /* Detect touch / coarse pointer environment */
   useEffect(() => {
-    if (tooltipRef.current) {
-      xToRef.current = gsap.quickTo(tooltipRef.current, 'x', { duration: 0.15, ease: 'power2.out' });
-      yToRef.current = gsap.quickTo(tooltipRef.current, 'y', { duration: 0.15, ease: 'power2.out' });
-    }
-  }, [activeProject]);
+    const touchCheck =
+      window.matchMedia('(hover: none)').matches ||
+      window.matchMedia('(pointer: coarse)').matches;
+    setIsTouch(touchCheck);
+  }, []);
 
-  const handleMouseMove = useCallback((e, project) => {
+  /* Initialize GSAP quickTo setters for desktop 60fps GPU mouse tracking */
+  useGSAP(() => {
+    if (!isTouch && panelRef.current) {
+      xToRef.current = gsap.quickTo(panelRef.current, 'x', { duration: 0.25, ease: 'power3.out' });
+      yToRef.current = gsap.quickTo(panelRef.current, 'y', { duration: 0.25, ease: 'power3.out' });
+      gsap.set(panelRef.current, { autoAlpha: 0, scale: 0.8 });
+    }
+  }, { scope: sectionRef, dependencies: [isTouch] });
+
+  /* Update coordinates cleanly on mousemove (desktop only) */
+  const handleMouseMove = useCallback((e) => {
+    if (isTouch || !xToRef.current || !yToRef.current || !panelRef.current) return;
+    const panelWidth = panelRef.current.offsetWidth || 380;
+    const panelHeight = panelRef.current.offsetHeight || 220;
+
+    let targetX = e.clientX + 24;
+    let targetY = e.clientY + 24;
+
+    if (targetX + panelWidth > window.innerWidth - 20) {
+      targetX = e.clientX - panelWidth - 16;
+    }
+    if (targetY + panelHeight > window.innerHeight - 20) {
+      targetY = e.clientY - panelHeight - 16;
+    }
+
+    xToRef.current(targetX);
+    yToRef.current(targetY);
+  }, [isTouch]);
+
+  /* Show panel and update active project on enter (desktop only) */
+  const handleMouseEnter = useCallback((project, e) => {
+    if (isTouch) return;
     setActiveProject(project);
-    if (xToRef.current && yToRef.current) {
-      xToRef.current(e.clientX + 20);
-      yToRef.current(e.clientY + 20);
+    if (panelRef.current) {
+      gsap.to(panelRef.current, {
+        autoAlpha: 1,
+        scale: 1,
+        duration: 0.35,
+        ease: 'power3.out',
+        force3D: true,
+      });
     }
-  }, []);
+    handleMouseMove(e);
+  }, [isTouch, handleMouseMove]);
 
+  /* Hide magnetic panel on leave (desktop only) */
   const handleMouseLeave = useCallback(() => {
-    setActiveProject(null);
-  }, []);
+    if (isTouch) return;
+    if (panelRef.current) {
+      gsap.to(panelRef.current, {
+        autoAlpha: 0,
+        scale: 0.8,
+        duration: 0.25,
+        ease: 'power2.in',
+        force3D: true,
+      });
+    }
+  }, [isTouch]);
 
+  /* Toggle mobile accordion tap handler */
+  const handleMobileTap = (id) => {
+    if (!isTouch) return;
+    setExpandedMobileId((prev) => (prev === id ? null : id));
+  };
+
+  /* ScrollTrigger Reveal Sequence */
   useGSAP(() => {
     const split = SplitText.create(titleRef.current, { type: 'words, chars' });
 
@@ -86,132 +154,167 @@ export default function Proyectos() {
       ease: 'power3.out',
       stagger: 0.02,
     }, '-=0.4')
-    .from(cardEls.current, {
+    .from(listItemsRef.current, {
       autoAlpha: 0,
-      y: 65,
-      duration: 0.85,
+      y: 60,
+      duration: 0.9,
       ease: 'power3.out',
-      stagger: 0.14,
+      stagger: 0.15,
       onComplete: () => {
-        gsap.set([headerRef.current, ...cardEls.current], { clearProps: 'willChange' });
+        gsap.set([headerRef.current, ...listItemsRef.current], { clearProps: 'willChange' });
       },
     }, '-=0.5');
   }, { scope: sectionRef });
 
   return (
-    <div ref={sectionRef} className="max-w-5xl mx-auto w-full relative">
-
-      {/* ── Magnetic Floating Glass Tooltip ── */}
-      <div
-        ref={tooltipRef}
-        aria-hidden="true"
-        className={`fixed top-0 left-0 pointer-events-none z-50 transition-opacity duration-300 ${
-          activeProject ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
-        }`}
-      >
-        {activeProject && (
-          <div className="bg-neutral-950/95 border border-white/20 rounded-2xl p-4 shadow-[0_0_40px_rgba(255,255,255,0.18)] backdrop-blur-2xl max-w-xs space-y-1.5">
-            <span className="font-mono text-[9px] tracking-[0.35em] uppercase text-white font-semibold block">
-              {activeProject.id} // PREVIEW
-            </span>
-            <p className="text-xs font-bold text-white tracking-wide">
-              {activeProject.name}
-            </p>
-            <p className="font-mono text-[9px] text-neutral-400">
-              {activeProject.architecture}
-            </p>
-          </div>
-        )}
-      </div>
+    <div ref={sectionRef} className="max-w-6xl mx-auto w-full relative overflow-x-hidden">
 
       {/* Header */}
-      <div ref={headerRef} className="mb-12 will-change-transform">
+      <div ref={headerRef} data-speed="1.1" className="mb-12 px-4 sm:px-0 will-change-transform">
         <span className="font-mono text-[11px] tracking-[0.4em] uppercase text-neutral-400 border border-white/15 rounded-full px-4 py-1.5 bg-white/[0.03]">
-          03&nbsp;/&nbsp;PROYECTOS
+          03&nbsp;/&nbsp;PROYECTOS DESTACADOS
         </span>
-        <h2 ref={titleRef} className="mt-6 text-4xl sm:text-5xl md:text-7xl font-black tracking-tighter text-white leading-none">
+        <h2 ref={titleRef} className="mt-6 text-3xl sm:text-5xl md:text-7xl font-black tracking-tighter text-white leading-none">
           Proyectos<br />
-          <span className="text-neutral-500">Destacados</span>
+          <span className="text-neutral-500">Seleccionados</span>
         </h2>
+        <p className="mt-4 font-mono text-[10px] tracking-[0.25em] uppercase text-neutral-500">
+          {isTouch
+            ? '[ Toca cualquier proyecto para desplegar los detalles técnicos ]'
+            : '[ Desplaza sobre cualquier título para proyectar el panel magnético ]'}
+        </p>
       </div>
 
-      {/* Project Cards */}
-      <div className="grid md:grid-cols-2 gap-6">
-        {PROJECTS.map((project, i) => (
-          <article
-            key={project.id}
-            ref={(el) => { cardEls.current[i] = el; }}
-            onMouseMove={(e) => handleMouseMove(e, project)}
-            onMouseLeave={handleMouseLeave}
-            className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.025] backdrop-blur-2xl p-8
-              transition-all duration-400 hover:border-white/40 hover:shadow-[0_0_50px_rgba(255,255,255,0.12)] flex flex-col justify-between will-change-transform"
-          >
-            {/* Silver laser top edge line */}
-            <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
-            <div>
-              {/* Header */}
-              <div className="flex items-start justify-between mb-5">
-                <div>
-                  <span className="font-mono text-[9px] tracking-[0.4em] uppercase text-neutral-400 group-hover:text-white transition-colors duration-300">
+      {/* Vertical List of Projects */}
+      <div className="flex flex-col border-t border-neutral-900 border-b border-neutral-900 divide-y divide-neutral-900/80">
+        {PROJECTS.map((project, i) => {
+          const isExpanded = expandedMobileId === project.id;
+          return (
+            <article
+              key={project.id}
+              ref={(el) => { listItemsRef.current[i] = el; }}
+              onMouseEnter={(e) => handleMouseEnter(project, e)}
+              onMouseMove={handleMouseMove}
+              onMouseLeave={handleMouseLeave}
+              onClick={() => handleMobileTap(project.id)}
+              className="project-item group py-8 sm:py-12 md:py-16 px-4 sm:px-8 flex flex-col lg:flex-row lg:items-center justify-between gap-6 cursor-pointer bg-black/40 hover:bg-neutral-950/80 transition-colors duration-400 select-none"
+            >
+              {/* Left Column: ID Badge & Massive Title */}
+              <div className="space-y-3 max-w-3xl">
+                <div className="flex items-center gap-3">
+                  <span className="font-mono text-[10px] tracking-[0.4em] uppercase text-neutral-400 group-hover:text-white border border-white/15 rounded-full px-3 py-0.5 bg-white/[0.03] transition-colors duration-300 font-semibold">
                     {project.id}
                   </span>
-                  <h3 className="mt-1.5 text-3xl font-black tracking-tighter text-white leading-none">
-                    {project.name}
-                  </h3>
-                  <p className="mt-1.5 font-mono text-[10px] tracking-[0.25em] uppercase text-neutral-500">
-                    {project.tagline}
-                  </p>
+                  <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-neutral-500">
+                    // {project.category}
+                  </span>
                 </div>
-                {/* Year pill */}
-                <span className="font-mono text-[9px] tracking-[0.2em] text-neutral-400 border border-white/15 rounded-full px-2.5 py-1 shrink-0 ml-3 mt-1 bg-white/[0.03]">
-                  {project.year}
+
+                {/* Massive Responsive Title */}
+                <h3 className="project-title-massive text-3xl sm:text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-none">
+                  {project.name}
+                </h3>
+
+                {/* Mobile / Touch Interactive Accordion Drawer */}
+                {isTouch && (
+                  <div className={`pt-2 transition-all duration-300 ${isExpanded ? 'block' : 'hidden md:hidden'}`}>
+                    <p className="font-mono text-xs text-neutral-300 leading-relaxed bg-white/[0.03] border border-white/15 rounded-xl p-4 mt-2">
+                      {project.desc}
+                    </p>
+                  </div>
+                )}
+              </div>
+
+              {/* Right Column: Tags, Year & CTA Link */}
+              <div className="flex flex-col sm:flex-row lg:flex-col items-start sm:items-center lg:items-end justify-between gap-4 shrink-0">
+                <div className="flex flex-wrap items-center gap-2">
+                  {project.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="font-mono text-[9px] tracking-[0.25em] uppercase text-neutral-400 border border-white/10 rounded-full px-3 py-1 bg-white/[0.02] group-hover:border-white/25 group-hover:text-white transition-colors duration-300"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+
+                <div className="flex items-center gap-4">
+                  <span className="font-mono text-xs tracking-[0.2em] text-neutral-500">
+                    [{project.year}]
+                  </span>
+
+                  <a
+                    href={project.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`Ver repositorio del proyecto ${project.name} en GitHub`}
+                    className="inline-flex items-center gap-2 font-mono text-xs tracking-[0.25em] uppercase px-5 py-2.5 rounded-xl border border-white/20 bg-white/[0.04] text-white hover:bg-white hover:text-black hover:border-white transition-all duration-300 outline-none focus-visible:ring-2 focus-visible:ring-white/80"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    <span>Ver Repositorio</span>
+                    <span aria-hidden="true">↗</span>
+                  </a>
+                </div>
+              </div>
+            </article>
+          );
+        })}
+      </div>
+
+      {/* ── Magnetic Floating Preview Panel (Desktop Only via React Portal) ── */}
+      {!isTouch && createPortal(
+        <div
+          ref={panelRef}
+          aria-hidden="true"
+          className="magnetic-preview-panel hidden md:block max-w-md w-full rounded-2xl border border-white/20 bg-neutral-950/95 backdrop-blur-2xl p-6 shadow-[0_0_50px_rgba(255,255,255,0.15)]"
+        >
+          {activeProject && (
+            <div className="space-y-4">
+              {/* Header HUD Badge */}
+              <div className="flex items-center justify-between border-b border-white/10 pb-3">
+                <div className="flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-white hud-pulse-dot" />
+                  <span className="font-mono text-[10px] tracking-[0.35em] uppercase text-white font-semibold">
+                    {activeProject.id} // PREVISUALIZACIÓN TÉCNICA
+                  </span>
+                </div>
+                <span className="font-mono text-[9px] tracking-[0.2em] uppercase text-neutral-500">
+                  [{activeProject.year}]
                 </span>
               </div>
 
-              {/* Description */}
-              <p className="text-sm text-neutral-400 leading-relaxed mb-6 group-hover:text-neutral-200 transition-colors duration-400">
-                {project.desc}
+              {/* Title */}
+              <div>
+                <h4 className="text-xl font-black tracking-tight text-white leading-snug">
+                  {activeProject.name}
+                </h4>
+                <p className="font-mono text-[10px] tracking-[0.25em] uppercase text-neutral-400 mt-0.5">
+                  {activeProject.category}
+                </p>
+              </div>
+
+              {/* Technical Description (The Monospace Scope Rule) */}
+              <p className="font-mono text-xs text-neutral-300 leading-relaxed bg-white/[0.03] border border-white/10 rounded-xl p-3.5">
+                {activeProject.desc}
               </p>
 
-              {/* Tech pill badges */}
-              <div className="flex flex-wrap gap-2 mb-8">
-                {project.tags.map((tag) => (
-                  <span key={tag}
-                    className="font-mono text-[9px] tracking-[0.3em] uppercase text-neutral-400 border border-white/10 rounded-full px-3 py-1 bg-white/[0.02]
-                      group-hover:border-white/25 group-hover:text-white transition-colors duration-300">
+              {/* Tags */}
+              <div className="flex flex-wrap gap-1.5 pt-1">
+                {activeProject.tags.map((tag) => (
+                  <span
+                    key={tag}
+                    className="font-mono text-[8px] tracking-[0.25em] uppercase text-neutral-300 border border-white/20 rounded-full px-2.5 py-0.5 bg-white/5"
+                  >
                     {tag}
                   </span>
                 ))}
               </div>
             </div>
-
-            {/* Directional Sweep CTA Button */}
-            <div className="pt-2">
-              <a
-                href={project.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={`Ver repositorio del proyecto ${project.name} en GitHub`}
-                className="group/btn relative inline-flex items-center justify-between w-full overflow-hidden rounded-xl border border-white/20 bg-white/[0.04] px-6 py-3.5 text-white transition-all duration-300 outline-none focus-visible:ring-2 focus-visible:ring-white/80 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
-              >
-                {/* Solid white background sweep from bottom */}
-                <span className="absolute inset-0 bg-white translate-y-full transition-transform duration-300 ease-out group-hover/btn:translate-y-0" />
-
-                {/* Button label */}
-                <span className="relative z-10 font-mono text-xs tracking-[0.25em] uppercase font-semibold group-hover/btn:text-black transition-colors duration-300">
-                  Ver Repositorio
-                </span>
-                <span aria-hidden="true" className="relative z-10 text-sm leading-none group-hover/btn:text-black transition-colors duration-300 transition-transform duration-300 group-hover/btn:translate-x-1">
-                  ↗
-                </span>
-              </a>
-            </div>
-          </article>
-        ))}
-      </div>
+          )}
+        </div>,
+        document.body
+      )}
 
     </div>
   );
 }
-

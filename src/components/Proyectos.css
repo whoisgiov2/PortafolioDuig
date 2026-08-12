@@ -1,0 +1,60 @@
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   PROYECTOS — Vertical Industrial List & Magnetic Preview Panel
+   Monochromatic Cyber Vault High-End Visual Design
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+/* Vertical list item container */
+.project-item {
+  position: relative;
+  transition: background-color 0.35s ease, border-color 0.35s ease;
+}
+
+/* Left accent laser bar on hover */
+.project-item::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: #ffffff;
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.project-item:hover::before {
+  transform: scaleY(1);
+  transform-origin: top;
+}
+
+/* Massive Title Illuminating Effect: Dark Gray (#262626) to Pure White (#FFFFFF) */
+.project-title-massive {
+  color: #262626;
+  transition: color 0.3s cubic-bezier(0.16, 1, 0.3, 1), text-shadow 0.3s ease;
+}
+
+.project-item:hover .project-title-massive {
+  color: #ffffff;
+  text-shadow: 0 0 40px rgba(255, 255, 255, 0.25);
+}
+
+/* Magnetic Floating Preview Panel (Frosted Slate Style) */
+.magnetic-preview-panel {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 100;
+  will-change: transform, opacity;
+}
+
+/* Pulse indicator for session badge */
+@keyframes pulseDot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.85); }
+}
+
+.hud-pulse-dot {
+  animation: pulseDot 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}

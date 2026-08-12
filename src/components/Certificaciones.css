@@ -168,20 +168,20 @@
 /* ── Mobile Responsive 3D Geometry Adjustment ─────────────── */
 @media (max-width: 640px) {
   .cert-scene {
-    height: 380px;
+    height: 360px;
+    perspective: 750px;
   }
   .cert-card-3d {
-    width: 160px;
-    margin-left: -80px;
-    margin-top: -95px;
+    width: 140px;
+    margin-left: -70px;
+    margin-top: -80px;
     transform:
       rotateY(calc(360deg / var(--n) * var(--i)))
-      translateZ(190px);
+      translateZ(155px);
   }
   .cert-card-inner {
-    padding: 14px;
-    min-height: 180px;
+    padding: 12px;
+    min-height: 160px;
     border-radius: 14px;
   }
 }
-

@@ -22,12 +22,18 @@ export default function App() {
   const [isBooting, setIsBooting] = useState(true);
 
   useGSAP(() => {
+    const isMobile =
+      typeof window !== 'undefined' &&
+      (window.matchMedia('(max-width: 768px)').matches ||
+       window.matchMedia('(pointer: coarse)').matches ||
+       window.matchMedia('(hover: none)').matches);
+
     ScrollSmoother.create({
       wrapper: '#smooth-wrapper',
       content: '#smooth-content',
-      smooth: 1.5,
-      effects: true,
-      normalizeScroll: true,
+      smooth: isMobile ? 0.6 : 1.5,
+      effects: !isMobile,
+      normalizeScroll: !isMobile,
     });
   }, []);
 
