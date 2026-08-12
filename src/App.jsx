@@ -2,6 +2,7 @@ import { useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ScrollSmoother } from 'gsap/ScrollSmoother';
+import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
 import { useGSAP } from '@gsap/react';
 
 import BootAnimation from './components/BootAnimation';
@@ -16,7 +17,7 @@ import Certificaciones from './components/Certificaciones';
 import ContactoSeguro from './components/ContactoSeguro';
 import Footer from './components/Footer';
 
-gsap.registerPlugin(useGSAP, ScrollTrigger, ScrollSmoother);
+gsap.registerPlugin(useGSAP, ScrollTrigger, ScrollSmoother, ScrollToPlugin);
 
 export default function App() {
   const [isBooting, setIsBooting] = useState(true);
@@ -68,14 +69,14 @@ export default function App() {
             </section>
 
             <section
-              id="habilidades-tecnicas"
+              id="stack"
               className="min-h-screen flex flex-col justify-center p-8 pt-24 overflow-x-hidden"
             >
               <HabilidadesTecnicas />
             </section>
 
             <section
-              id="habilidades-sociales"
+              id="soft-skills"
               className="min-h-screen flex flex-col justify-center p-8 pt-24"
             >
               <HabilidadesSociales />
@@ -110,4 +111,5 @@ export default function App() {
     </div>
   );
 }
+
 

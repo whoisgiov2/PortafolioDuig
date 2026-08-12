@@ -1,155 +1,261 @@
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import gsap from 'gsap';
+import { useGSAP } from '@gsap/react';
+import { ScrambleTextPlugin } from 'gsap/ScrambleTextPlugin';
 
-const WELCOME_TEXT = 'Bienvenido/a a mi portafolio';
-const CIPHER_CHARS = ['0', '1', '#', '%', 'X', '@', '!', '*', '&', '>', '<', '~', '^'];
+gsap.registerPlugin(useGSAP, ScrambleTextPlugin);
 
-function randomCipherChar() {
-  return CIPHER_CHARS[Math.floor(Math.random() * CIPHER_CHARS.length)];
-}
+const LOG_MESSAGES = [
+  '> INICIANDO PROTOCOLOS LSTI...',
+  '> CONECTANDO NODO UANL [SECURE_CHANNEL]...',
+  '> IDENTIDAD: CARLOS GIOVANNI REYES MEDINA',
+  '> ACCESO CONCEDIDO.',
+];
 
 export default function BootAnimation({ onComplete }) {
   const containerRef = useRef(null);
-  const letterRefs = useRef([]);
-  const originalChars = useRef([]);
+  const ringOuterRef = useRef(null);
+  const ringMidRef = useRef(null);
+  const ringInnerRef = useRef(null);
+  const coreDotRef = useRef(null);
+  const flareCoreRef = useRef(null);
+  const flareBeamRef = useRef(null);
+  const logContainerRef = useRef(null);
+  const lineRefs = useRef([]);
 
-  const chars = WELCOME_TEXT.split('');
+  useGSAP(
+    () => {
+      const rings = [ringOuterRef.current, ringMidRef.current, ringInnerRef.current];
+      const flareElements = [flareCoreRef.current, flareBeamRef.current];
 
-  useEffect(() => {
-    originalChars.current = chars;
+      // Hardware GPU acceleration hints & initial optical hidden state
+      gsap.set(rings, { force3D: true, transformStyle: 'preserve-3d' });
+      gsap.set(flareElements, { autoAlpha: 0, scale: 0, force3D: true });
 
-    const validRefs = letterRefs.current.filter(Boolean);
-    if (validRefs.length === 0) return;
+      // 1. Independent infinite asymmetric ring rotations (GSAP Core)
+      gsap.to(ringOuterRef.current, {
+        rotation: 360,
+        repeat: -1,
+        ease: 'none',
+        duration: 8,
+      });
 
-    const tl = gsap.timeline();
+      gsap.to(ringMidRef.current, {
+        rotation: -360,
+        repeat: -1,
+        ease: 'none',
+        duration: 6,
+      });
 
-    // ── Phase 1: Emerge from void with motion blur, scale depth & direction vectors ──
-    tl.fromTo(
-      validRefs,
-      {
-        x: () => gsap.utils.random(-window.innerWidth * 0.7, window.innerWidth * 0.7),
-        y: () => gsap.utils.random(-window.innerHeight * 0.7, window.innerHeight * 0.7),
-        scale: () => gsap.utils.random(1.8, 2.5),
-        rotationZ: () => gsap.utils.random(-90, 90),
-        filter: 'blur(16px)',
-        opacity: 0,
-        force3D: true,
-      },
-      {
-        x: 0,
-        y: 0,
-        scale: 1,
-        rotationZ: 0,
-        filter: 'blur(0px)',
-        opacity: 1,
-        ease: 'expo.out',
-        duration: 1.6,
-        stagger: 0.02,
-        force3D: true,
+      gsap.to(ringInnerRef.current, {
+        rotation: 360,
+        repeat: -1,
+        ease: 'none',
+        duration: 4,
+      });
+
+      // Master Timeline
+      const masterTl = gsap.timeline({
+        onComplete: () => {
+          if (onComplete) onComplete();
+        },
+      });
+
+      // 2. Sequential ScrambleText decryption sequence
+      lineRefs.current.forEach((el, index) => {
+        if (!el) return;
+
+        masterTl.to(
+          el,
+          {
+            autoAlpha: 1,
+            duration: 1.2,
+            scrambleText: {
+              text: LOG_MESSAGES[index],
+              chars: '0123456789!@#$%^&*()_+=',
+              speed: 0.4,
+            },
+          },
+          index === 0 ? 0.2 : '+=0.2'
+        );
+      });
+
+      // Brief pause after "ACCESO CONCEDIDO."
+      masterTl.to({}, { duration: 0.3 });
+
+      // 3. Quantum Lock Release (Cinemática de Ruptura)
+      masterTl.add(() => {
+        // Kill infinite rotation tweens
+        gsap.killTweensOf(rings);
+      });
+
+      // Force rings alignment to rotation: 0 with ease: "power4.out", duration: 1, and borderColor: "#ffffff"
+      masterTl.to(rings, {
+        rotation: 0,
+        borderColor: '#ffffff',
+        duration: 1,
+        ease: 'power4.out',
+        overwrite: 'auto',
+      });
+
+      // Massive scale blast towards camera: scale: 30, autoAlpha: 0, ease: "expo.inOut", duration: 1.5, stagger: 0.1
+      masterTl.to(
+        rings,
+        {
+          scale: 30,
+          autoAlpha: 0,
+          duration: 1.5,
+          ease: 'expo.inOut',
+          stagger: 0.1,
+          force3D: true,
+        },
+        '+=0.05'
+      );
+
+      // Optical Impact: Synchronized Monochromatic Lens Flare Burst
+      masterTl.to(
+        flareCoreRef.current,
+        {
+          autoAlpha: 1,
+          scale: 2.5,
+          duration: 0.25,
+          ease: 'power2.out',
+        },
+        '<'
+      );
+
+      masterTl.to(
+        flareBeamRef.current,
+        {
+          autoAlpha: 1,
+          scaleX: 1.5,
+          scaleY: 8,
+          duration: 0.25,
+          ease: 'power2.out',
+        },
+        '<'
+      );
+
+      // Dissolve Lens Flare smoothly with backdrop release
+      masterTl.to(
+        flareElements,
+        {
+          autoAlpha: 0,
+          scale: 4,
+          duration: 0.8,
+          ease: 'power2.out',
+        },
+        '>-0.1'
+      );
+
+      // Core HUD node expansion
+      if (coreDotRef.current) {
+        masterTl.to(
+          coreDotRef.current,
+          {
+            scale: 20,
+            autoAlpha: 0,
+            duration: 1.2,
+            ease: 'expo.inOut',
+          },
+          '<'
+        );
       }
-    );
 
-    // ── Phase 2: Security Cipher Scramble — The Monospace Scope Rule in Silver ──
-    tl.call(() => {
-      if (containerRef.current) {
-        const textEl = containerRef.current.querySelector('p');
-        if (textEl) {
-          textEl.classList.remove('font-extrabold', 'tracking-tighter', 'text-white');
-          textEl.classList.add('font-mono', 'text-neutral-400');
-          validRefs.forEach((ref) => {
-            if (ref) {
-              ref.style.textShadow = '0 0 20px rgba(255,255,255,0.4)';
-            }
-          });
-        }
-      }
+      // Log block fade out
+      masterTl.to(
+        logContainerRef.current,
+        {
+          autoAlpha: 0,
+          duration: 0.5,
+          ease: 'power2.in',
+        },
+        '<-0.3'
+      );
 
-      const startTime = Date.now();
-      const duration = 1000;
-      const intervalMs = 40;
-
-      const interval = setInterval(() => {
-        const elapsed = Date.now() - startTime;
-        const progress = elapsed / duration;
-
-        validRefs.forEach((ref, i) => {
-          if (!ref) return;
-          const originalChar = originalChars.current[i];
-          if (originalChar === ' ') return;
-
-          if (progress < 0.9) {
-            ref.textContent = randomCipherChar();
-          } else {
-            ref.textContent = originalChar;
-          }
-        });
-
-        if (elapsed >= duration) {
-          clearInterval(interval);
-          validRefs.forEach((ref, i) => {
-            if (ref) ref.textContent = originalChars.current[i];
-          });
-        }
-      }, intervalMs);
-    });
-
-    // Hold cipher phase
-    tl.to({}, { duration: 1.1 });
-
-    // ── Phase 3: Asymmetric Magnetic Blur Scatter Exit ──
-    tl.to(validRefs, {
-      x: () => gsap.utils.random(-window.innerWidth * 1.2, window.innerWidth * 1.2),
-      y: () => gsap.utils.random(-window.innerHeight * 1.2, window.innerHeight * 1.2),
-      rotationZ: () => gsap.utils.random(-120, 120),
-      scale: 0.3,
-      filter: 'blur(16px)',
-      opacity: 0,
-      ease: 'expo.in',
-      duration: 1.2,
-      stagger: 0.015,
-      force3D: true,
-    });
-
-    // ── Phase 4: Backdrop dissolve & clean unmount ──
-    tl.to(containerRef.current, {
-      opacity: 0,
-      pointerEvents: 'none',
-      duration: 0.5,
-      ease: 'power2.inOut',
-      onComplete: () => {
-        if (onComplete) onComplete();
-      },
-    });
-
-    return () => {
-      tl.kill();
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+      // Main black backdrop fade out to reveal portfolio
+      masterTl.to(
+        containerRef.current,
+        {
+          autoAlpha: 0,
+          duration: 0.8,
+          ease: 'power2.inOut',
+        },
+        '-=0.6'
+      );
+    },
+    { scope: containerRef }
+  );
 
   return (
     <div
       ref={containerRef}
-      className="fixed inset-0 z-[100] bg-black flex items-center justify-center overflow-hidden"
+      className="fixed inset-0 bg-black z-[9999] flex items-center justify-center overflow-hidden select-none"
     >
-      <p className="font-extrabold tracking-tighter text-white text-5xl md:text-7xl lg:text-9xl flex flex-wrap justify-center items-center leading-none select-none text-center w-[75vw] max-w-[75%] mx-auto">
-        {chars.map((char, i) => (
-          <span
-            key={i}
-            ref={(el) => (letterRefs.current[i] = el)}
-            style={{
-              display: 'inline-block',
-              minWidth: char === ' ' ? '0.3em' : undefined,
-              textShadow: char !== ' '
-                ? '0 0 40px rgba(255,255,255,0.25), 0 0 80px rgba(255,255,255,0.1)'
-                : 'none',
-              willChange: 'transform, opacity, filter',
-            }}
+      {/* HUD Biometric Lock Concentric Rings */}
+      <div className="relative flex items-center justify-center w-80 h-80 pointer-events-none">
+        {/* Outer Ring */}
+        <div
+          ref={ringOuterRef}
+          className="absolute w-64 h-64 md:w-72 md:h-72 rounded-full border border-neutral-800 border-t-white will-change-transform"
+        />
+
+        {/* Middle Ring */}
+        <div
+          ref={ringMidRef}
+          className="absolute w-48 h-48 md:w-52 md:h-52 rounded-full border border-neutral-800 border-r-white border-dashed will-change-transform"
+        />
+
+        {/* Inner Ring */}
+        <div
+          ref={ringInnerRef}
+          className="absolute w-32 h-32 md:w-36 md:h-36 rounded-full border border-neutral-800 border-b-white will-change-transform"
+        />
+
+        {/* Core Node */}
+        <div
+          ref={coreDotRef}
+          className="absolute w-2 h-2 rounded-full bg-white will-change-transform shadow-[0_0_12px_#ffffff]"
+        />
+      </div>
+
+      {/* Lens Flare Monochromatic Optical Refraction Layer */}
+      <div className="fixed inset-0 flex items-center justify-center pointer-events-none z-[100]">
+        {/* Core Radial Flare Spot */}
+        <div
+          ref={flareCoreRef}
+          className="w-64 h-64 rounded-full mix-blend-screen will-change-[transform,opacity,filter]"
+          style={{
+            background: 'radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 70%)',
+          }}
+        />
+
+        {/* Anamorphic Horizontal Flare Beam */}
+        <div
+          ref={flareBeamRef}
+          className="absolute w-[200vw] h-[2px] bg-white opacity-80 blur-sm mix-blend-screen will-change-[transform,opacity,filter]"
+        />
+      </div>
+
+      {/* Access Log Terminal */}
+      <div
+        ref={logContainerRef}
+        className="font-mono text-xs text-neutral-500 absolute bottom-6 left-6 md:bottom-8 md:left-8 space-y-1.5 text-left max-w-sm pointer-events-none z-10"
+      >
+        {LOG_MESSAGES.map((_, index) => (
+          <div
+            key={index}
+            ref={(el) => (lineRefs.current[index] = el)}
+            className="opacity-0 will-change-transform"
           >
-            {char}
-          </span>
+            &nbsp;
+          </div>
         ))}
-      </p>
+      </div>
     </div>
   );
 }
+
+
+
+

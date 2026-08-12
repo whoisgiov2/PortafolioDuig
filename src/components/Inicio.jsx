@@ -82,7 +82,8 @@ export default function Inicio() {
   }, { scope: sectionRef });
 
   return (
-    <div ref={sectionRef} className="max-w-5xl mx-auto w-full">
+    <div ref={sectionRef} id="inicio" className="max-w-5xl mx-auto w-full">
+
 
       {/* Badge */}
       <div ref={badgeRef} className="mb-8 will-change-transform">

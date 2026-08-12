@@ -131,11 +131,52 @@ Orquestador principal que implementa la estructura estricta requerida por GSAP `
 - **ScrollSmoother Integration:** Configurado mediante `useGSAP` sobre `#smooth-wrapper` y `#smooth-content` con `smooth: 1.5`, `effects: true` y `normalizeScroll: true`.
 - **Efectos Parallax:** Los elementos marcados con `data-speed` (ej. `BackgroundCanvas` a `0.8`, encabezados a `1.1`) calculan automáticamente desplazamientos diferenciales en relación a la inercia del scroll.
 
-### 4.3 HabilidadesTecnicas (`src/components/HabilidadesTecnicas.jsx`)
+### 4.3 HabilidadesTecnicas (`src/components/HabilidadesTecnicas.jsx` & `HabilidadesTecnicas.css`)
 
-- **Cuadrícula 3D Skewed (`skills-grid`):** Tarjetas dispuestas en una cuadrícula responsiva estilizada mediante `HabilidadesTecnicas.css`. Cada tarjeta `.box` posee una degradación monocromática plata/carbón (`#171717` a `#d4d4d4`) y pseudo-elementos blurred que crean una rotación 3D inclinada al pasar el cursor o enfocar mediante teclado.
-- **Holographic Modal vía React Portals:** Al hacer clic en cualquier tarjeta de tecnología, el modal de detalle se teletransporta directamente al `document.body` mediante `createPortal`, evitando recortes de *clipping* o interferencias provocadas por los contenedores transformados de `ScrollSmoother`.
-- **Kinemática de Barras de Progreso:** Animación de la barra de nivel de dominio técnico (`width: 0% → progress%`) orquestada mediante GSAP con `ease: power3.out` al abrir el modal holográfico.
+Sección rediseñada bajo el concepto **Folder Stack** (Carpetas de Habilidades), una arquitectura jerárquica Padre-Hijo en dos niveles:
+
+```
++------------------------------------------------------------------------------------+
+|                         ARQUITECTURA DE CARPETAS (PADRE-HIJO)                      |
++------------------------------------------------------------------------------------+
+| VISTA GENERAL: Grid 3D Skewed de Carpetas  -->  VISTA EXPANDIDA: Sub-box Grid     |
+| (Contador + Messy Folder Peek + Abanico)         (Tarjetas + React Portal Modal)   |
++------------------------------------------------------------------------------------+
+```
+
+1. **Jerarquía Z-Index (Sandwich Technique):**
+   Dentro de cada contenedor de portada `.box` (`overflow: visible`), las capas se organizan de forma estricta:
+   - **Capa 0 (`z-index: 0`):** Pseudo-elementos `::before` y `::after` para degradados monocromáticos plata/carbón (`#171717` a `#d4d4d4`) y sombras con desenfoque de fondo.
+   - **Capa 1 (`z-index: 1`):** `<span>` para destellos y reflexiones flotantes de cristal.
+   - **Capa 2 (`z-index: 10`):** Contenedor absoluto de iconos de previsualización (`pointer-events-none`). Renderiza de forma dinámica los 3 primeros iconos (`.slice(0, 3)`) de la categoría activa.
+   - **Capa 3 (`z-index: 20`):** Tarjeta frontal `.content` (`relative z-20 bg-black/80 backdrop-blur-md border border-white/10`). Actúa como cristal frontal que tapa parcialmente los iconos.
+
+2. **Física Messy Folder Peek (Estado Base y Hover Fan-out):**
+   - **Estado Base (Desorden Orgánico):** Los 3 iconos vectoriales de previsualización se muestran **visibles en todo momento**, asomándose de manera desalineada y desfasada por encima de la tarjeta frontal:
+     - *Icono 0 (Izq):* `-translate-x-4 -translate-y-10 -rotate-12 opacity-60`
+     - *Icono 1 (Centro):* `-translate-y-14 rotate-6 opacity-80 z-[11]`
+     - *Icono 2 (Der):* `translate-x-6 -translate-y-8 rotate-12 opacity-60`
+   - **Estado Hover (Fan-out Expandido):** Al pasar el cursor (`group-hover`), se proyectan hacia arriba en un abanico completo con opacidad al 100%:
+     - *Icono 0 (Izq):* `-translate-x-14 -translate-y-24 -rotate-12 scale-110`
+     - *Icono 1 (Centro):* `-translate-y-28 rotate-0 scale-110`
+     - *Icono 2 (Der):* `translate-x-14 -translate-y-24 rotate-12 scale-110`
+
+3. **Bóveda de Íconos Vectoriales Purificados:**
+   Cada componente SVG utiliza `fill="currentColor"` o `fillOpacity` multinivel, garantizando adaptación estricta al tema monocromático:
+   - `CiberseguridadIcon`: Escudo cibernético multicapa con profundidades `fillOpacity="0.4"`, `0.3`, `0.1` y `0.8`.
+   - `WildcardIcon`: Hexágono geométrico simétrico (utilizado como fallback).
+   - `FortinetIcon`: Logotipo oficial purificado de Fortinet.
+   - `CiscoIcon`: Puente y marca denominativa oficial de Cisco con fondo circular de cristal (`fillOpacity="0.05"`).
+   - `PythonIcon`: Logotipo oficial purificado de Python.
+   - `LinuxIcon`: Silueta detallada del pingüino Tux oficial purificada.
+   - `BashIcon`: Terminal hexagonal multicapa con prompt `$` en opacidad total.
+   - `ReactIcon`: Estructura orbital atómica oficial de React.
+   - `NodeIcon`: Estructura hexagonal N de Node.js purificada.
+   - `TypstIcon`: Logotipo oficial de Typst en 5 trazados de alta resolución.
+
+4. **Expansión y Modal Holográfico:**
+   - Al seleccionar una carpeta, actualiza `categoriaActiva`, desplegando la cuadrícula secundaria de tarjetas `.sub-box` con animación en cascada orquestada mediante GSAP `useGSAP` (`y: 40 → 0`, `stagger: 0.08s`).
+   - Al hacer clic en cualquier `.sub-box`, abre el modal holográfico detallado renderizado vía React Portal (`createPortal`) al `document.body`, mostrando la insignia del skill, el ícono vectorial específico y la cinemática de progreso (`width: 0% → progress%`).
 
 ### 4.4 Certificaciones (`src/components/Certificaciones.jsx` & `Certificaciones.css`)
 

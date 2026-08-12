@@ -170,7 +170,8 @@ export default function HabilidadesSociales() {
   }, { scope: sectionRef });
 
   return (
-    <div ref={sectionRef} className="max-w-5xl mx-auto w-full">
+    <div ref={sectionRef} id="soft-skills" className="max-w-5xl mx-auto w-full">
+
 
       {/* Header — asymmetric right */}
       <div ref={headerRef} className="mb-12 text-right will-change-transform">

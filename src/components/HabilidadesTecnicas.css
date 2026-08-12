@@ -42,6 +42,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow: visible;                        /* ← CRÍTICO: permite que los SVGs salgan hacia arriba */
   transition: height 0.5s cubic-bezier(0.16, 1, 0.3, 1), z-index 0.3s ease;
   cursor: default;
   z-index: 1;
@@ -53,7 +54,7 @@
   z-index: 20;
 }
 
-/* Pseudo-elements for skewed silver/charcoal background */
+/* Pseudo-elements for skewed silver/charcoal background — CAPA 0 (fondo) */
 .box::before {
   content: '';
   position: absolute;
@@ -67,6 +68,7 @@
   backface-visibility: hidden;
   transition: 0.5s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: transform, filter;
+  z-index: 0;                               /* ← Fondo más atrás */
 }
 
 .box::after {
@@ -83,6 +85,7 @@
   backface-visibility: hidden;
   transition: 0.5s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: transform, filter;
+  z-index: 0;                               /* ← Sombra más atrás */
 }
 
 .box:hover::before,
@@ -94,7 +97,7 @@
   width: calc(100% - 40px);
 }
 
-/* Floating Frosted Slate Glass Layers */
+/* Floating Frosted Slate Glass Layers — CAPA 1 (destellos flotantes) */
 .box span {
   display: block;
   position: absolute;
@@ -102,7 +105,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: 5;
+  z-index: 1;                               /* ← Por encima del fondo, debajo de los SVGs */
   pointer-events: none;
 }
 
@@ -169,7 +172,7 @@
   50% { transform: translateY(-15px) translateZ(0); }
 }
 
-/* Inner Card Content */
+/* Inner Card Content — CAPA 3 (cristal frontal siempre al frente) */
 .box .content {
   position: relative;
   left: 0;
@@ -179,7 +182,7 @@
   -webkit-backdrop-filter: blur(16px);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
   border-radius: 12px;
-  z-index: 10;
+  z-index: 20;                              /* ← CAPA 3: cristal siempre al frente */
   color: #ffffff;
   border: 1px solid rgba(255, 255, 255, 0.12);
   width: 100%;
@@ -261,3 +264,13 @@
     font-size: 0.6rem;
   }
 }
+
+/* ── Folder Stack & Sub-box Styles ── */
+.folder-card {
+  perspective: 1000px;
+}
+
+.sub-box {
+  will-change: transform, opacity, border-color, box-shadow;
+}
+
