@@ -1,5 +1,39 @@
-# Logs
-logs
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# DE VSECOPS HARDENED GITIGNORE — PORTAFOLIO GIOVANNI REYES
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+# ── Dependencies & Package Managers ──
+node_modules/
+.pnpm-store/
+
+# ── Production Builds & Outputs ──
+dist/
+dist-ssr/
+build/
+out/
+
+# ── Environment & Secrets ──
+.env
+.env.*
+!.env.example
+*.local
+
+# ── System & Editor Files ──
+.DS_Store
+Thumbs.db
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+*.bak
+*.tmp
+
+# ── Logs & Debug Outputs ──
+logs/
 *.log
 npm-debug.log*
 yarn-debug.log*
@@ -7,36 +41,18 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-node_modules
-dist
-dist-ssr
-*.local
+# ── AI, Agent, Taste & Skill Infrastructure ──
+.impeccable/
+.agents/
+.gemini/
+.cursor/
+.claude/
+skills/
+skills-lock.json
 
-# Editor directories and files
-.vscode/*
-!.vscode/extensions.json
-.idea
-.DS_Store
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
-
-# impeccable-ignore-start
-.impeccable/config.local.json
-.impeccable/hook.cache.json
-.impeccable/hook.pending.json
-.impeccable/*.png
-.impeccable/live/server.json
-.impeccable/live/sessions/
-.impeccable/live/previews/
-.impeccable/live/annotations/
-.impeccable/live/cache/
-.impeccable/live/manual-edit-apply-transaction.json
-.impeccable/live/manual-edit-events.jsonl
-.impeccable/live/manual-edit-evidence/
-.impeccable/live/pending-manual-edits.json
-.impeccable/live/deferred-svelte-component-accepts.json
-.impeccable/live/*.png
-# impeccable-ignore-end
+# ── Internal Documentation & Audit Reports ──
+audit_report.md
+SKILL.md
+DESIGN.md
+PRODUCT.md
+PROFILE.md
