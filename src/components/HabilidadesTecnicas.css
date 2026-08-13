@@ -59,7 +59,7 @@
   content: '';
   position: absolute;
   top: 0;
-  left: 50px;
+  left: 25%;
   width: 50%;
   height: 100%;
   background: linear-gradient(315deg, #171717, #d4d4d4);
@@ -75,7 +75,7 @@
   content: '';
   position: absolute;
   top: 0;
-  left: 50px;
+  left: 25%;
   width: 50%;
   height: 100%;
   background: linear-gradient(315deg, #171717, #d4d4d4);
@@ -93,8 +93,8 @@
 .box:focus-visible::before,
 .box:focus-visible::after {
   transform: skewX(0deg) translateZ(0);
-  left: 20px;
-  width: calc(100% - 40px);
+  left: 10px;
+  width: calc(100% - 20px);
 }
 
 /* Floating Frosted Slate Glass Layers — CAPA 1 (destellos flotantes) */
@@ -194,7 +194,7 @@
 
 .box:hover .content,
 .box:focus-visible .content {
-  left: -20px;
+  left: 0;
   padding: 26px 24px;
   border-color: rgba(255, 255, 255, 0.4);
   box-shadow: 0 0 35px rgba(255, 255, 255, 0.18);
@@ -237,7 +237,7 @@
   }
   .box::before,
   .box::after {
-    left: 25px;
+    left: 25%;
   }
   .box:hover span::before,
   .box:focus-visible span::before {

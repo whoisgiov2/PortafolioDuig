@@ -70,7 +70,7 @@ export default function App() {
 
             <section
               id="stack"
-              className="min-h-screen flex flex-col justify-center p-8 pt-24 overflow-x-hidden"
+              className="min-h-screen flex flex-col justify-center p-8 pt-24"
             >
               <HabilidadesTecnicas />
             </section>

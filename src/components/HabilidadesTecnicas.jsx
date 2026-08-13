@@ -42,7 +42,7 @@ const CiberseguridadIcon = ({ className }) => (
     <path fill="currentColor" fillOpacity="0.3" d="M309.62,161.34v62.18a19.19,19.19,0,0,1-19.13,19.13H185.26v47.84a19.2,19.2,0,0,1-19.15,19.13H22.62A19.18,19.18,0,0,1,3.49,290.49V264.34c8,3.11,16.67,4.74,25.19,6.29,32.42,5.83,70.1,9.46,94.27-12.91,11.37-10.51,18.3-25.81,31.62-33.69s29.66-6.59,44.92-8.51c37.25-4.67,69.84-29.66,90.44-61a178.23,178.23,0,0,0,9.59-16.45C305.58,144.2,309.62,153.43,309.62,161.34Z" />
     {/* Líneas Principales y Escudo (Opacidad 100%) */}
     <path fill="currentColor" d="M168.63,318.13H25.13A25.16,25.16,0,0,1,0,293V230.81C0,218.54,8.58,204,19.56,197.5c1.6-1.06,12.31-7.87,29.91-13.38A68.16,68.16,0,0,1,96.88,67a68.55,68.55,0,0,1,66.83,53.79q4.73-1.9,10.15-3.59a68.18,68.18,0,1,1,94.79,0c17.11,5.36,27.71,12,29.76,13.28,11.08,5.75,19.72,20.34,19.72,33.41V226A25.16,25.16,0,0,1,293,251.16H193.76V293A25.16,25.16,0,0,1,168.63,318.13ZM96.88,79A56.25,56.25,0,0,0,40.7,135.15a55.6,55.6,0,0,0,25,46.64l11.73,7.71-13.67,3.16C40.45,198,26.24,207.47,26.1,207.56l-.35.22C18.3,212.1,12,222.64,12,230.81V293a13.15,13.15,0,0,0,13.13,13.13h143.5A13.15,13.15,0,0,0,181.76,293V239.16H293A13.15,13.15,0,0,0,306.13,226V163.85c0-8.6-6.27-19.28-13.42-22.85l-.35-.18-.32-.22c-.22-.14-14.41-9.54-37.69-14.91l-13.67-3.16,11.73-7.71a55.59,55.59,0,0,0,25-46.64,56.18,56.18,0,1,0-112.36,0,55.59,55.59,0,0,0,25,46.64l11.59,7.61-13.48,3.24a125.57,125.57,0,0,0-26.46,9.1L154,138.64l-.91-8.6A56.67,56.67,0,0,0,96.88,79Z" />
-    <path fill="currentColor" d="M168.33,337.39,165.65,336A234.93,234.93,0,0,1,121,305.35c-29.74-26-45.46-54.8-45.46-83.21V130.63l92.83-23.21,92.83,23.21v91.51c0,28.41-15.72,57.18-45.46,83.21A234.93,234.93,0,0,1,171,336ZM87.51,140v82.14c0,54.45,66.51,93.89,80.83,101.74,14.3-7.86,80.83-47.37,80.83-101.74V140l-80.83-20.21Z" />
+    <path fill="currentColor" d="M168.33 337.39 L165.65 336 A234.93 234.93 0 0 1 121 305.35 c-29.74-26-45.46-54.8-45.46-83.21V130.63l92.83-23.21,92.83,23.21v91.51c0,28.41-15.72,57.18-45.46,83.21A234.93,234.93,0,0,1,171,336ZM87.51,140v82.14c0,54.45,66.51,93.89,80.83,101.74,14.3-7.86,80.83-47.37,80.83-101.74V140l-80.83-20.21Z" />
     {/* Cuerpo del Escudo Interno (Translúcido) */}
     <path fill="currentColor" fillOpacity="0.1" d="M168.33,336.34s86.83-43.41,86.83-108.54V141l-86.83-21.71L81.51,141v86.83C81.51,292.93,168.33,336.34,168.33,336.34Z" />
     <path fill="currentColor" fillOpacity="0.2" d="M255.16,186.56v36.29c0,65.13-86.83,108.54-86.83,108.54S81.51,288,81.51,222.86V186.56c0,65.13,86.82,108.54,86.82,108.54S255.16,251.69,255.16,186.56Z" />
@@ -132,7 +132,7 @@ const CATEGORIAS_HABILIDADES = [
         name: 'Cybersecurity',
         category: 'CIBERSEGURIDAD',
         categoryLabel: 'SEGURIDAD & DEFENSA',
-        desc: 'Enfoque en gobernanza de datos (GDPR), sistemas de gestión de seguridad (ISMS) y teoría de autómatas.',
+        desc: 'Aplicación de teoría de autómatas para análisis de protocolos de red y fundamentos de criptografía.',
         level: 'Avanzado',
         progress: 85,
         icon: CiberseguridadIcon,
@@ -261,6 +261,7 @@ export default function HabilidadesTecnicas() {
   const modalBackdropRef = useRef(null);
   const modalCardRef = useRef(null);
   const progressBarRef = useRef(null);
+  const isFirstRender = useRef(true);
 
   /* ── Body Scroll Lock when Modal is Active ── */
   useEffect(() => {
@@ -275,7 +276,7 @@ export default function HabilidadesTecnicas() {
   }, [selectedSkill]);
 
   /* ── Header and Title Reveal Animation ── */
-  useGSAP(() => {
+  const { contextSafe } = useGSAP(() => {
     const split = SplitText.create(titleRef.current, { type: 'words, chars' });
 
     const tl = gsap.timeline({
@@ -316,17 +317,30 @@ export default function HabilidadesTecnicas() {
 
   /* ── GSAP Layout Transition Kinematics (Polish 3D) ── */
   useGSAP(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
+
     if (categoriaActiva) {
       const tl = gsap.timeline();
 
       // 1. Efecto Cámara: Desenfoque y colapso de las carpetas inactivas
       tl.to('.categoria-inactiva', {
-        opacity: 0,
+        autoAlpha: 0,
         filter: 'blur(10px)',
         scale: 0.95,
         duration: 0.4,
         ease: 'power3.inOut',
-        display: 'none'
+      }, 0);
+
+      tl.to('.categoria-activa', {
+        autoAlpha: 1,
+        filter: 'blur(0px)',
+        scale: 1,
+        duration: 0.4,
+        ease: 'power3.out',
+        clearProps: 'transform,filter,opacity,visibility'
       }, 0);
 
       // 2. Expansión fluida del contenedor como una máscara
@@ -353,18 +367,17 @@ export default function HabilidadesTecnicas() {
       }
 
     } else {
-      // Restaurar el grid principal al cerrar la carpeta
-      gsap.to('.categoria-inactiva', {
-        opacity: 1,
+      // Restaurar TODAS las carpetas del grid principal al cerrar la vista expandida
+      gsap.to('.folder-card', {
+        autoAlpha: 1,
         filter: 'blur(0px)',
         scale: 1,
         duration: 0.5,
         ease: 'power3.out',
-        display: 'block',
-        clearProps: 'all'
+        clearProps: 'transform,filter,opacity,visibility'
       });
     }
-  }, [categoriaActiva]);
+  }, { scope: sectionRef, dependencies: [categoriaActiva] });
 
   /* ── GSAP Holographic Modal Expansion & Progress Bar Kinematics ── */
   useGSAP(() => {
@@ -396,7 +409,7 @@ export default function HabilidadesTecnicas() {
   }, { dependencies: [selectedSkill] });
 
   /* ── Smooth Modal Close Handler ── */
-  const handleCloseModal = () => {
+  const handleCloseModal = contextSafe(() => {
     if (modalBackdropRef.current && modalCardRef.current) {
       gsap.to(modalCardRef.current, {
         autoAlpha: 0,
@@ -416,10 +429,10 @@ export default function HabilidadesTecnicas() {
     } else {
       setSelectedSkill(null);
     }
-  };
+  });
 
   return (
-    <div ref={sectionRef} id="stack" className="max-w-7xl mx-auto w-full py-10 md:py-16 overflow-x-clip overflow-y-visible">
+    <div ref={sectionRef} className="max-w-7xl mx-auto w-full overflow-x-clip overflow-y-visible">
 
       {/* Section Header */}
       <div ref={headerRef} data-speed="1.1" className="mb-14 px-6 will-change-transform">
@@ -444,12 +457,16 @@ export default function HabilidadesTecnicas() {
         className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 md:gap-12 justify-items-center items-start max-w-7xl mx-auto px-4 sm:px-6 overflow-x-clip overflow-y-visible"
         aria-label="Cuadrícula interactiva 3D de carpetas de habilidades técnicas"
       >
-        {CATEGORIAS_HABILIDADES.map((cat) => (
-          <div
-            key={cat.id}
-            className="folder-card categoria-inactiva flex flex-col items-center justify-center cursor-pointer select-none touch-manipulation active:scale-[0.98] transition-transform duration-150"
-            onClick={() => setCategoriaActiva(cat)}
-          >
+        {CATEGORIAS_HABILIDADES.map((cat) => {
+          const isActiva = categoriaActiva?.id === cat.id;
+          const isOtraActiva = categoriaActiva !== null && !isActiva;
+
+          return (
+            <div
+              key={cat.id}
+              className={`folder-card flex flex-col items-center justify-center cursor-pointer select-none touch-manipulation active:scale-[0.98] transition-transform duration-150 justify-self-center mx-auto w-full ${isOtraActiva ? 'categoria-inactiva' : ''} ${isActiva ? 'categoria-activa' : ''}`}
+              onClick={() => setCategoriaActiva(cat)}
+            >
             {/* 3D Skewed Glassmorphic Box Cover */}
             <div className="box group relative overflow-visible outline-none focus-visible:ring-2 focus-visible:ring-white/80 focus-visible:ring-offset-4 focus-visible:ring-offset-black">
               <span />
@@ -481,14 +498,14 @@ export default function HabilidadesTecnicas() {
                 })()}
               </div>
 
-              {/* CAPA 3 — Front Card Content: cristal siempre al frente */}
               <div className="content relative z-20 flex flex-col items-center justify-center">
                 <h2 className="leading-tight text-center">{cat.nombre}</h2>
                 <p>{cat.herramientas.length} HERRAMIENTAS</p>
               </div>
             </div>
           </div>
-        ))}
+        );
+      })}
       </div>
 
       {/* Expanded Active Category View (Full Width Mobile Stacking) */}

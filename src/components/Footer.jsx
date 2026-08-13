@@ -59,7 +59,7 @@ export default function Footer() {
           </a>
 
           <a
-            href="https://www.credly.com/users/giovanni-reyes-medina/badges/credly"
+            href="https://www.credly.com/users/giovanni-reyes-medina"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Perfil oficial de credenciales en Credly"

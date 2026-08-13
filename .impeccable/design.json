@@ -1,26 +1,26 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-08-10T21:12:00Z",
-  "title": "Design System: Carlos Giovanni Reyes Medina Portfolio",
+  "generatedAt": "2026-08-13T00:20:00Z",
+  "title": "Design System: Carlos Giovanni Reyes Medina Portfolio (Cyber Vault)",
   "extensions": {
     "colorMeta": {
       "primary": {
         "role": "primary",
-        "displayName": "Terminal Cyber Green",
-        "canonical": "#1eff8e",
-        "tonalRamp": ["#00381b", "#005a2e", "#008043", "#00a85a", "#1eff8e", "#5cffa9", "#9affc7", "#e0ffef"]
+        "displayName": "Radiant Pure White",
+        "canonical": "#ffffff",
+        "tonalRamp": ["#171717", "#262626", "#404040", "#737373", "#a3a3a3", "#d4d4d4", "#e5e5e5", "#ffffff"]
       },
       "secondary": {
         "role": "secondary",
-        "displayName": "Laser Cyan",
-        "canonical": "#4878c0",
-        "tonalRamp": ["#0f1c30", "#182c4b", "#264370", "#365b95", "#4878c0", "#749bd4", "#a1bfe7", "#d8e5f6"]
+        "displayName": "Silver Slate",
+        "canonical": "#d4d4d4",
+        "tonalRamp": ["#0a0a0a", "#171717", "#262626", "#525252", "#737373", "#a3a3a3", "#d4d4d4", "#f5f5f5"]
       },
       "alert": {
         "role": "alert",
-        "displayName": "Terminal Alert Red",
-        "canonical": "#ee411a",
-        "tonalRamp": ["#3b0b02", "#5e1405", "#8c1f09", "#be2d0d", "#ee411a", "#f36f51", "#f7a08b", "#fcdcd4"]
+        "displayName": "Muted Slate Accent",
+        "canonical": "#a3a3a3",
+        "tonalRamp": ["#171717", "#262626", "#404040", "#525252", "#737373", "#a3a3a3", "#d4d4d4", "#e5e5e5"]
       },
       "neutral-bg": {
         "role": "neutral",
@@ -122,7 +122,7 @@
       "kind": "card",
       "refersTo": "card-section",
       "description": "Primary section container card with high blur and subtle white glass border.",
-      "html": "<section class=\"ds-glass-card\"><h2>Herramientas y Tecnologías</h2><p>Estas son las tecnologías con las que trabajo de forma habitual.</p></section>",
+      "html": "<section class=\"ds-glass-card\"><h2>Habilidades Técnicas</h2><p>Estas son las tecnologías con las que trabajo de forma habitual.</p></section>",
       "css": ".ds-glass-card { background: rgba(23, 23, 23, 0.6); backdrop-filter: blur(24px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 32px; padding: 32px; box-shadow: 0 30px 120px -80px rgba(0,0,0,0.9); color: #e2e8f0; font-family: Inter, sans-serif; }"
     },
     {
@@ -153,8 +153,8 @@
     ],
     "rules": [
       {
-        "name": "The Green Rarity Rule",
-        "body": "Terminal Cyber Green (#1eff8e) is used on ≤5% of any given screen.",
+        "name": "The Absolute Monochromatic Rule",
+        "body": "No chromatic colors (greens, blues, reds) are permitted. Visual hierarchy is established strictly through font weight, letter-spacing, opacity levels, and contrast between #000000, #171717, #a3a3a3, and #ffffff.",
         "section": "colors"
       },
       {
