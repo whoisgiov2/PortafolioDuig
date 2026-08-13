@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { SplitText } from 'gsap/SplitText';
@@ -15,7 +16,7 @@ const CERTS = [
     issuer: 'UANL · FCFM',
     desc: 'Programa académico especializado en ciberseguridad, criptografía, auditoría de sistemas, análisis de vulnerabilidades y arquitectura de redes seguras.',
     year: '2022 — Pres.',
-    href: 'https://www.credly.com/users/giovanni-reyes-medina/badges/credly',
+    href: 'https://www.credly.com/users/giovanni-reyes-medina',
   },
   {
     id: 'CERT-RHSA1',
@@ -23,7 +24,7 @@ const CERTS = [
     issuer: 'Red Hat Academy',
     desc: 'Verifica la asistencia al curso de administración de sistemas RHEL. Prepara para el curso avanzado RH134 (Red Hat System Administration II).',
     year: '2024',
-    href: 'https://www.credly.com/users/giovanni-reyes-medina/badges/credly',
+    href: 'https://www.credly.com/users/giovanni-reyes-medina',
   },
   {
     id: 'CERT-FCF',
@@ -31,7 +32,7 @@ const CERTS = [
     issuer: 'Fortinet',
     desc: 'Valida habilidades técnicas y conocimientos fundamentales requeridos para roles de entrada en ciberseguridad dentro del ecosistema Fortinet.',
     year: '2024',
-    href: 'https://www.credly.com/users/giovanni-reyes-medina/badges/credly',
+    href: 'https://www.credly.com/users/giovanni-reyes-medina',
   },
   {
     id: 'CERT-NSE1',
@@ -39,7 +40,7 @@ const CERTS = [
     issuer: 'Fortinet · NSE',
     desc: 'Dominio del panorama actual de amenazas cibernéticas y la comprensión de los vectores de ataque modernos.',
     year: '2024',
-    href: 'https://www.credly.com/users/giovanni-reyes-medina/badges/credly',
+    href: 'https://www.credly.com/users/giovanni-reyes-medina',
   },
   {
     id: 'CERT-NSE2',
@@ -47,7 +48,7 @@ const CERTS = [
     issuer: 'Fortinet · NSE',
     desc: 'Avala conocimientos para identificar y describir características de Next Generation Firewalls (NGFW) y soluciones de seguridad.',
     year: '2024',
-    href: 'https://www.credly.com/users/giovanni-reyes-medina/badges/credly',
+    href: 'https://www.credly.com/users/giovanni-reyes-medina',
   },
   {
     id: 'CERT-GSC',
@@ -55,7 +56,7 @@ const CERTS = [
     issuer: 'Fortinet',
     desc: 'Demuestra conocimiento de terminología esencial de ciberseguridad, conceptos básicos y tecnologías clave del sector.',
     year: '2024',
-    href: 'https://www.credly.com/users/giovanni-reyes-medina/badges/credly',
+    href: 'https://www.credly.com/users/giovanni-reyes-medina',
   },
   {
     id: 'CERT-ITL',
@@ -63,7 +64,7 @@ const CERTS = [
     issuer: 'Fortinet',
     desc: 'Comprensión de amenazas modernas a redes, la identificación de actores maliciosos y el análisis de principios de seguridad.',
     year: '2024',
-    href: 'https://www.credly.com/users/giovanni-reyes-medina/badges/credly',
+    href: 'https://www.credly.com/users/giovanni-reyes-medina',
   },
   {
     id: 'CERT-TIC',
@@ -71,7 +72,7 @@ const CERTS = [
     issuer: 'Fortinet',
     desc: 'Fundamentos técnicos de ciberseguridad aplicados a la protección de redes y endpoints empresariales.',
     year: '2024',
-    href: 'https://www.credly.com/users/giovanni-reyes-medina/badges/credly',
+    href: 'https://www.credly.com/users/giovanni-reyes-medina',
   },
 ];
 
@@ -170,7 +171,7 @@ export default function Certificaciones() {
   }, { scope: sectionRef });
 
   return (
-    <div ref={sectionRef} className="max-w-5xl mx-auto w-full my-16 overflow-x-hidden">
+    <div ref={sectionRef} className="max-w-5xl mx-auto w-full my-16 overflow-x-clip overflow-y-visible">
 
       {/* ── Section header ── */}
       <div ref={headerRef} data-speed="1.1" className="mb-10 text-right will-change-transform">
@@ -190,19 +191,19 @@ export default function Certificaciones() {
       <div ref={wrapperRef} className="will-change-transform">
 
         {/* HUD: state dots + label */}
-        <div className="flex items-center justify-between mb-5 px-1">
+        <div className="flex flex-wrap sm:flex-nowrap items-center justify-between gap-3 mb-5 px-1">
           <div className="flex items-center gap-2">
             {[0, 1, 2].map((s) => (
               <div key={s} className={`cert-hud-dot ${viewState === s && activeCard === null ? 'active' : ''}`} />
             ))}
           </div>
-          <div className="text-right space-x-3">
+          <div className="text-right space-x-2 sm:space-x-3">
             <span className="font-mono text-[9px] tracking-[0.35em] uppercase text-white font-semibold">
               {activeCard !== null
                 ? `DETALLE // [${CERTS[activeCard].id}]`
                 : STATE_META[viewState].label}
             </span>
-            <span className="font-mono text-[9px] tracking-[0.2em] uppercase text-neutral-500">
+            <span className="font-mono text-[9px] tracking-[0.2em] uppercase text-neutral-500 hidden sm:inline">
               {activeCard !== null ? 'Modo enfoque 2D' : STATE_META[viewState].hint}
             </span>
           </div>
@@ -284,7 +285,7 @@ export default function Certificaciones() {
         {/* ── Global Credly CTA — always visible ── */}
         <div className="mt-6 flex justify-center">
           <a
-            href="https://www.credly.com/users/giovanni-reyes-medina/badges/credly"
+            href="https://www.credly.com/users/giovanni-reyes-medina"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Ver todas las credenciales oficiales en Credly"
@@ -299,7 +300,7 @@ export default function Certificaciones() {
       </div>
 
       {/* ── 2D MODAL OVERLAY (100% 2D Frontal, Monochromatic Chrome) ── */}
-      {activeCard !== null && (
+      {activeCard !== null && createPortal(
         <div
           role="dialog"
           aria-modal="true"
@@ -379,7 +380,8 @@ export default function Certificaciones() {
               [ Clic fuera para cerrar y reanudar la órbita ]
             </p>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
 
     </div>

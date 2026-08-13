@@ -315,7 +315,7 @@ export default function HabilidadesTecnicas() {
       }, '-=0.5');
   }, { scope: sectionRef });
 
-  /* ── GSAP Layout Transition Kinematics (Polish 3D) ── */
+  /* ── GSAP Layout Transition Kinematics (Orchestrated 3D Depth) ── */
   useGSAP(() => {
     if (isFirstRender.current) {
       isFirstRender.current = false;
@@ -325,7 +325,7 @@ export default function HabilidadesTecnicas() {
     if (categoriaActiva) {
       const tl = gsap.timeline();
 
-      // 1. Efecto Cámara: Desenfoque y colapso de las carpetas inactivas
+      // 1. Depth of Field Camera Effect: Inactive folders fade and blur
       tl.to('.categoria-inactiva', {
         autoAlpha: 0,
         filter: 'blur(10px)',
@@ -334,6 +334,7 @@ export default function HabilidadesTecnicas() {
         ease: 'power3.inOut',
       }, 0);
 
+      // Clean presentation of active folder
       tl.to('.categoria-activa', {
         autoAlpha: 1,
         filter: 'blur(0px)',
@@ -343,21 +344,21 @@ export default function HabilidadesTecnicas() {
         clearProps: 'transform,filter,opacity,visibility'
       }, 0);
 
-      // 2. Expansión fluida del contenedor como una máscara
+      // 2. Fluid mask-like container expansion from height: 0 to height: 'auto'
       tl.fromTo('.contenedor-herramientas',
         { height: 0, opacity: 0, y: -20 },
         { height: 'auto', opacity: 1, y: 0, duration: 0.6, ease: 'expo.inOut' },
         0.1
       );
 
-      // 3. Polish 3D: Las herramientas caen y se enderezan en cascada
+      // 3. 3D Physics Entrance Cascade: Tool cards drop with 3D tilt & tension settling
       tl.fromTo('.tarjeta-herramienta',
         { y: 50, opacity: 0, rotationX: -15, scale: 0.9 },
-        { y: 0, opacity: 1, rotationX: 0, scale: 1, duration: 0.7, stagger: 0.08, ease: 'back.out(1.5)' },
+        { y: 0, opacity: 1, rotationX: 0, scale: 1, duration: 0.7, stagger: 0.08, ease: 'back.out(1.5)', force3D: true },
         0.3
       );
 
-      // 4. Entrada sutil del botón de retorno
+      // 4. Subtle entrance for the back button
       if (document.querySelector('.btn-volver')) {
         tl.fromTo('.btn-volver',
           { opacity: 0, x: -20 },
@@ -367,7 +368,7 @@ export default function HabilidadesTecnicas() {
       }
 
     } else {
-      // Restaurar TODAS las carpetas del grid principal al cerrar la vista expandida
+      // Restore all cards in the main 3D grid when closing expanded folder view
       gsap.to('.folder-card', {
         autoAlpha: 1,
         filter: 'blur(0px)',
@@ -510,7 +511,7 @@ export default function HabilidadesTecnicas() {
 
       {/* Expanded Active Category View (Full Width Mobile Stacking) */}
       {categoriaActiva && (
-        <div className="contenedor-herramientas overflow-hidden px-4 sm:px-6 w-full">
+        <div className="contenedor-herramientas overflow-hidden px-4 sm:px-6 w-full will-change-[height,opacity]">
           <div className="bg-neutral-950/90 border border-white/20 rounded-2xl sm:rounded-3xl p-5 sm:p-10 backdrop-blur-2xl shadow-[0_0_60px_rgba(255,255,255,0.08)] relative">
 
             {/* Expanded Header Bar */}
@@ -546,7 +547,7 @@ export default function HabilidadesTecnicas() {
             {/* Sub-boxes Secondary Grid (Responsive 1-col on mobile, 2 on tablet, 3 on desktop) */}
             <div
               ref={subGridRef}
-              className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 mt-6 sm:mt-8 overflow-x-hidden"
+              className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 mt-6 sm:mt-8 overflow-x-hidden [perspective:1000px]"
             >
               {categoriaActiva.herramientas.map((tool) => (
                 <div
@@ -561,7 +562,7 @@ export default function HabilidadesTecnicas() {
                       setSelectedSkill(tool);
                     }
                   }}
-                  className="sub-box tarjeta-herramienta border border-white/10 hover:border-white/40 active:border-white/50 bg-white/[0.03] hover:bg-white/[0.08] active:bg-white/[0.12] rounded-2xl p-5 sm:p-6 transition-all duration-300 cursor-pointer group flex flex-col justify-between min-h-[140px] sm:min-h-[160px] shadow-lg hover:shadow-[0_0_30px_rgba(255,255,255,0.12)] outline-none focus-visible:ring-2 focus-visible:ring-white/80 touch-manipulation active:scale-[0.99]"
+                  className="sub-box tarjeta-herramienta transform-gpu will-change-transform border border-white/10 hover:border-white/40 active:border-white/50 bg-white/[0.03] hover:bg-white/[0.08] active:bg-white/[0.12] rounded-2xl p-5 sm:p-6 transition-all duration-300 cursor-pointer group flex flex-col justify-between min-h-[140px] sm:min-h-[160px] shadow-lg hover:shadow-[0_0_30px_rgba(255,255,255,0.12)] outline-none focus-visible:ring-2 focus-visible:ring-white/80 touch-manipulation active:scale-[0.99]"
                 >
                   <div className="flex items-center justify-between w-full mb-3 sm:mb-4">
                     <div className="p-2 sm:p-2.5 rounded-xl border border-white/15 bg-white/[0.04] group-hover:border-white/40 group-hover:bg-white/[0.1] transition-all duration-300">
