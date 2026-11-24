@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="referrer" content="no-referrer" />
+  <meta name="theme-color" content="#EBE2CC" />
+  <meta http-equiv="Content-Security-Policy"
+    content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self' mailto:;" />
+  <meta name="description"
+    content="Portafolio de Ciberseguridad de Carlos Giovanni Reyes Medina — Seguridad defensiva, auditoría IAM, gestión de cambios RFC, trazabilidad de activos, seguridad perimetral y automatización." />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="es_MX" />
+  <meta property="og:site_name" content="Carlos Giovanni Reyes Medina · Ciberseguridad" />
+  <meta property="og:title" content="Carlos Giovanni Reyes Medina · Portafolio de Ciberseguridad" />
+  <meta property="og:description"
+    content="Seguridad defensiva, auditoría IAM con Python, gobierno de activos y cambios RFC, seguridad perimetral y automatización." />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Carlos Giovanni Reyes Medina · Portafolio de Ciberseguridad" />
+  <meta name="twitter:description"
+    content="Portafolio técnico de Ciberseguridad Defensiva, IAM, RFC, Redes y Automatización (UANL)." />
+  <link rel="icon" type="image/svg+xml"
+    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23E6F2DD' stroke='%23659287' stroke-width='3.5'/%3E%3Cpath d='M32 14L17 20.5V31.5C17 41.2 23.4 49.4 32 52C40.6 49.4 47 41.2 47 31.5V20.5L32 14Z' fill='none' stroke='%231B2E29' stroke-width='3.5' stroke-linejoin='round'/%3E%3Cpath d='M25.5 32.5L30 37L39 27.5' fill='none' stroke='%2329463E' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E" />
+  <title>Carlos Giovanni Reyes Medina · Portafolio de Ciberseguridad</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Space+Grotesk:wght@500;600;700&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="styles/bundle.min.css" />
+<noscript>
+    <style>
+      .draft-preloader { display: none !important; }
+    </style>
+  </noscript>
+</head>
+
+<body>
+  <!-- Estado de carga inicial limpio -->
+  <div class="draft-preloader" id="draft-preloader" role="status" aria-live="polite"
+    aria-label="Inicializando portafolio de ciberseguridad">
+    <div class="draft-preloader__sheet">
+      <div class="draft-preloader__stage">
+        <span class="preloader-emblem" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"
+            stroke-linejoin="round">
+            <path d="M12 3L4.5 6.2V11.6C4.5 16.4 7.7 20.6 12 21.8C16.3 20.6 19.5 16.4 19.5 11.6V6.2L12 3Z" />
+            <path d="M9 12.2L11.1 14.3L15.4 9.8" />
+          </svg>
+        </span>
+        <div class="loader" aria-hidden="true">
+          <div class="text"><span>Loading</span></div>
+          <div class="text"><span>Loading</span></div>
+          <div class="text"><span>Loading</span></div>
+          <div class="text"><span>Loading</span></div>
+          <div class="text"><span>Loading</span></div>
+          <div class="text"><span>Loading</span></div>
+          <div class="text"><span>Loading</span></div>
+          <div class="text"><span>Loading</span></div>
+          <div class="text"><span>Loading</span></div>
+          <div class="line"></div>
+        </div>
+      </div>
+
+      <div class="draft-preloader__footer">
+        <span class="draft-preloader__caption">Ciberseguridad Defensiva · IAM · Redes</span>
+        <button class="btn btn--small btn--outline" id="skip-preloader-btn" type="button">Entrar</button>
+      </div>
+    </div>
+  </div>
+
+  <a class="skip-link" href="#perfil">Saltar al contenido principal</a>
+
+  <!-- Barra fina de progreso de lectura en GPU -->
+  <div class="draft-progress" aria-hidden="true">
+    <div class="draft-progress__bar" id="scroll-progress-bar"></div>
+  </div>
+
+  <header class="site-header" id="site-header">
+    <div class="container site-header__inner">
+      <a class="brand-mark" href="#perfil" aria-label="Inicio — Carlos Giovanni Reyes Medina">
+        <span class="brand-mark__emblem" aria-hidden="true">
+          <svg class="brand-mark__svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2.8L4.5 6V11.5C4.5 16.4 7.7 20.5 12 21.7C16.3 20.5 19.5 16.4 19.5 11.5V6L12 2.8Z" />
+            <circle class="brand-mark__node" cx="12" cy="12" r="2.3" />
+          </svg>
+        </span>
+        <span class="brand-mark__name">C. G. Reyes Medina</span>
+      </a>
+
+      <button class="nav-toggle" id="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav"
+        aria-label="Abrir menú de navegación">
+        <span class="nav-toggle__line"></span>
+        <span class="nav-toggle__line"></span>
+      </button>
+
+      <nav class="primary-nav" id="primary-nav" aria-label="Secciones del portafolio">
+        <a class="primary-nav__link is-active" href="#perfil" data-nav-target="perfil" aria-current="location">
+          <span class="primary-nav__index">01</span> Perfil
+        </a>
+        <a class="primary-nav__link" href="#proyectos" data-nav-target="proyectos">
+          <span class="primary-nav__index">02</span> Proyectos
+        </a>
+        <a class="primary-nav__link" href="#certificaciones" data-nav-target="certificaciones">
+          <span class="primary-nav__index">03</span> Certificaciones
+        </a>
+        <a class="primary-nav__link" href="#contacto" data-nav-target="contacto">
+          <span class="primary-nav__index">04</span> Contacto Seguro
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content" class="draft-main">
+    <!-- =========================================================
+         SECCIÓN 01: PERFIL
+    ========================================================== -->
+    <section class="draft-section draft-section--hero" id="perfil" aria-labelledby="heading-perfil" data-draft-section>
+      <div class="container">
+        <div class="folio-header" data-draft-item data-entry-kind="folio">
+          <div class="folio-header__left">
+            <span class="folio-index">01</span>
+            <svg class="folio-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"
+              stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M12 3L4.5 6.2V11.6C4.5 16.4 7.7 20.6 12 21.8C16.3 20.6 19.5 16.4 19.5 11.6V6.2L12 3Z" />
+              <path d="M9 12.2L11.1 14.3L15.4 9.8" />
+            </svg>
+            <span class="folio-kicker">Perfil &amp; Enfoque Defensivo</span>
+          </div>
+          <span class="folio-meta">UANL · Lic. en Seguridad en TI</span>
+          <span class="guide-rule" aria-hidden="true"></span>
+        </div>
+
+        <div class="hero-grid">
+          <div class="hero-main">
+            <p class="hero-eyebrow" data-draft-item>
+              <span class="eyebrow-tick" aria-hidden="true"></span>
+              Seguridad Defensiva · Gobierno IAM &amp; RFC · Automatización
+            </p>
+
+            <h1 class="hero-title" id="heading-perfil" data-draft-item>
+              Carlos Giovanni<br />
+              <span class="hero-title__highlight">
+                Reyes Medina
+                <svg class="brush-stroke brush-stroke--title" viewBox="0 0 340 16" fill="none"
+                  preserveAspectRatio="none" aria-hidden="true">
+                  <path
+                    d="M4 9.6C2.2 7.2 4.8 4.8 11.5 4.5C92 1.8 214 3.1 337 7.9C338.8 8.0 338.9 8.6 337 8.8C226 10.4 108 12.9 14.5 13.2C8.1 13.2 5.1 11.2 4 9.6Z"
+                    fill="currentColor" />
+                </svg>
+              </span>
+            </h1>
+
+            <p class="hero-lead" data-draft-item>
+              Estudiante de tercer año de <strong>Licenciatura en Seguridad en TI en la UANL</strong>, enfocado en
+              reducir la superficie de exposición organizacional mediante
+              <span class="inline-emphasis">
+                auditoría IAM y conciliación de accesos
+                <svg class="brush-stroke brush-stroke--inline" viewBox="0 0 240 8" fill="none"
+                  preserveAspectRatio="none" aria-hidden="true">
+                  <path
+                    d="M2 5.2C1.2 3.6 3.4 2.4 8.2 2.2C74 1.1 158 1.9 238 4.4C164 5.6 78 6.8 9.5 6.9C4.4 6.9 2.6 6.1 2 5.2Z"
+                    fill="currentColor" />
+                </svg>
+              </span>,
+              <strong>trazabilidad de activos de TI</strong>, <strong>gestión formal de cambios (RFC)</strong>,
+              <strong>segmentación perimetral</strong> y automatización defensiva en <strong>Python, PowerShell y
+                Bash</strong>.
+            </p>
+
+            <div class="hero-actions">
+              <div class="cv-download" data-cv-widget data-draft-item>
+                <label class="cv-download__label" aria-label="Descargar CV de Carlos Giovanni Reyes Medina">
+                  <input type="checkbox" class="cv-download__input" />
+                  <span class="cv-download__circle">
+                    <svg class="cv-download__icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                      viewBox="0 0 24 24">
+                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
+                        d="M12 19V5m0 14-4-4m4 4 4-4"></path>
+                    </svg>
+                    <span class="cv-download__square" aria-hidden="true"></span>
+                  </span>
+                  <span class="cv-download__title">Descargar CV</span>
+                  <span class="cv-download__title cv-download__title--open">Abrir CV</span>
+                </label>
+                <a class="cv-download__open-anchor" href="assets/CV_Carlos_Giovanni_Reyes_Medina.pdf" target="_blank"
+                  rel="noopener noreferrer" tabindex="-1" aria-hidden="true"
+                  aria-label="Visualizar CV de Carlos Giovanni Reyes Medina en una ventana nueva">
+                  <span class="sr-only">Abrir CV en una ventana nueva</span>
+                </a>
+              </div>
+              <a class="btn btn--primary" href="#proyectos" data-draft-item>
+                <span>Ver proyectos</span>
+                <svg class="btn__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85"
+                  stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M5 12H19M13 6L19 12L13 18" />
+                </svg>
+              </a>
+              <a class="btn btn--outline" href="#contacto" data-draft-item>Contacto seguro</a>
+            </div>
+          </div>
+
+          <aside class="hero-spec-card interactive-sheet" aria-label="Ficha técnica resumida" data-draft-item
+            data-seq-card>
+            <div class="spec-card__header seq-step seq-step--1">
+              <span class="spec-card__label">Resumen Operativo</span>
+              <span class="status-pill">
+                <span class="status-pill__dot" aria-hidden="true"></span>
+                Disponible · Prácticas / Jr.
+              </span>
+            </div>
+
+            <dl class="spec-list seq-step seq-step--2">
+              <div class="spec-list__row">
+                <dt>
+                  <svg class="spec-list__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"
+                    stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M12 4L3 8.5L12 13L21 8.5L12 4Z" />
+                    <path d="M6.5 10.5V15.5C6.5 17.2 9 18.8 12 18.8C15 18.8 17.5 17.2 17.5 15.5V10.5" />
+                  </svg>
+                  Formación
+                </dt>
+                <dd>Lic. en Seguridad en TI — UANL (3er año)</dd>
+              </div>
+              <div class="spec-list__row">
+                <dt>
+                  <svg class="spec-list__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"
+                    stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M12 20.5C16 16.5 18.5 13.4 18.5 9.8C18.5 6.2 15.6 3.5 12 3.5C8.4 3.5 5.5 6.2 5.5 9.8C5.5 13.4 8 16.5 12 20.5Z" />
+                    <circle cx="12" cy="9.8" r="2.3" />
+                  </svg>
+                  Ubicación
+                </dt>
+                <dd>Escobedo, N.L., México</dd>
+              </div>
+              <div class="spec-list__row">
+                <dt>
+                  <svg class="spec-list__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"
+                    stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M12 3.5L4.8 6.5V11.6C4.8 16.1 7.8 20.1 12 21.3C16.2 20.1 19.2 16.1 19.2 11.6V6.5L12 3.5Z" />
+                  </svg>
+                  Enfoque
+                </dt>
+                <dd>IAM, Activos TI, RFC, Perímetro, Scripting</dd>
+              </div>
+              <div class="spec-list__row">
+                <dt>
+                  <svg class="spec-list__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"
+                    stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <circle cx="12" cy="12" r="8.5" />
+                    <path d="M3.8 12H20.2M12 3.5C14.3 5.8 15.5 8.8 15.5 12C15.5 15.2 14.3 18.2 12 20.5C9.7 18.2 8.5 15.2 8.5 12C8.5 8.8 9.7 5.8 12 3.5Z" />
+                  </svg>
+                  Idiomas
+                </dt>
+                <dd>Español (Nativo) · Inglés (Nivel B2+)</dd>
+              </div>
+            </dl>
+
+            <a class="spec-card__footnote seq-step seq-step--3" href="#certificaciones">
+              <span class="spec-card__metric">
+                <span data-cert-count>06</span>
+                <svg class="brush-stroke brush-stroke--metric" viewBox="0 0 64 10" fill="none"
+                  preserveAspectRatio="none" aria-hidden="true">
+                  <path
+                    d="M2.5 6.4C1.4 4.7 3.2 3.1 7.4 2.9C24 2.1 44 2.9 62 5.4C44 6.8 23 8.1 7.8 8.2C4.2 8.2 3.1 7.3 2.5 6.4Z"
+                    fill="currentColor" />
+                </svg>
+              </span>
+              <span class="spec-card__footnote-copy">Certificaciones acreditadas en Google, Red Hat y Fortinet</span>
+              <svg class="spec-card__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M7 17L17 7M9 7H17V15" />
+              </svg>
+            </a>
+          </aside>
+        </div>
+
+        <!-- Experiencia relevante -->
+        <div class="subsection-block">
+          <div class="subsection-header" data-draft-item>
+            <h2 class="subsection-title">Experiencia Relevante</h2>
+            <span class="subsection-note">Trazabilidad operativa y mentoría técnica</span>
+          </div>
+
+          <div class="experience-grid" id="experience-list">
+            <article class="draft-card draft-card--experience interactive-sheet" tabindex="0" data-draft-item
+              data-seq-card>
+              <div class="draft-card__head seq-step seq-step--1">
+                <span class="icon-chip icon-chip--sage" aria-hidden="true">
+                  <svg class="draft-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="4.5" y="10.5" width="15" height="10" rx="2" />
+                    <path d="M8 10.5V7.5C8 5.3 9.8 3.5 12 3.5C14.2 3.5 16 5.3 16 7.5V10.5" />
+                    <circle cx="12" cy="15.5" r="1.4" class="svg-accent-part" />
+                  </svg>
+                </span>
+                <span class="meta-badge meta-badge--sage">Gobierno de TI</span>
+              </div>
+
+              <h3 class="draft-card__title seq-step seq-step--2">
+                <span class="focal-stroke-wrap">
+                  Casas Javer S.A. de C.V.
+                  <svg class="card-taper-stroke" viewBox="0 0 240 9" fill="none" preserveAspectRatio="none"
+                    aria-hidden="true">
+                    <path
+                      d="M2.5 5.6C1.5 4.0 3.6 2.6 8.6 2.4C76 1.2 162 2.2 238 4.9C164 6.3 79 7.6 9.8 7.7C4.5 7.7 3.1 6.6 2.5 5.6Z"
+                      fill="currentColor" />
+                  </svg>
+                </span>
+              </h3>
+              <p class="draft-card__subtitle seq-step seq-step--2">Seguridad de Accesos IAM, Activos y Gestión RFC</p>
+
+              <ul class="draft-list seq-step seq-step--3">
+                <li>Desarrollo de scripts de <strong>auditoría IAM en Python</strong> para conciliar identidades y
+                  detectar cuentas inactivas tras el <em>offboarding</em>.</li>
+                <li>Gobierno y normalización del <strong>inventario de activos de TI</strong> para sostener visibilidad
+                  y reducir exposición.</li>
+                <li>Evaluación de solicitudes de cambio (<strong>RFC</strong>) aplicando <strong>mínimo
+                    privilegio</strong> en la migración hacia <strong>Microsoft Planner</strong>.</li>
+              </ul>
+
+              <div class="tag-row draft-card__tags seq-step seq-step--4">
+                <span class="draft-tag">Python</span>
+                <span class="draft-tag">IAM</span>
+                <span class="draft-tag draft-tag--earth">RFC</span>
+                <span class="draft-tag draft-tag--earth">Activos TI</span>
+                <span class="draft-tag">Mínimo Privilegio</span>
+              </div>
+            </article>
+
+            <article class="draft-card draft-card--experience interactive-sheet" tabindex="0" data-draft-item
+              data-seq-card>
+              <div class="draft-card__head seq-step seq-step--1">
+                <span class="icon-chip icon-chip--earth" aria-hidden="true">
+                  <svg class="draft-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 5.5C4 4.7 4.7 4 5.5 4H11V19.5H5.5C4.7 19.5 4 20.2 4 21V5.5Z" />
+                    <path d="M20 5.5C20 4.7 19.3 4 18.5 4H13V19.5H18.5C19.3 19.5 20 20.2 20 21V5.5Z" />
+                  </svg>
+                </span>
+                <span class="meta-badge meta-badge--earth">Docencia &amp; Mentoría</span>
+              </div>
+
+              <h3 class="draft-card__title seq-step seq-step--2">
+                <span class="focal-stroke-wrap">
+                  Preparatoria #25 — UANL
+                  <svg class="card-taper-stroke" viewBox="0 0 240 9" fill="none" preserveAspectRatio="none"
+                    aria-hidden="true">
+                    <path
+                      d="M2.5 5.6C1.5 4.0 3.6 2.6 8.6 2.4C76 1.2 162 2.2 238 4.9C164 6.3 79 7.6 9.8 7.7C4.5 7.7 3.1 6.6 2.5 5.6Z"
+                      fill="currentColor" />
+                  </svg>
+                </span>
+              </h3>
+              <p class="draft-card__subtitle seq-step seq-step--2">Asesor Académico Especializado</p>
+
+              <ul class="draft-list seq-step seq-step--3">
+                <li>Asesoría académica especializada orientada a consolidar razonamiento lógico, análisis estructurado y
+                  rigor técnico.</li>
+                <li>Documentación clara de procedimientos, comunicación técnica efectiva y seguimiento continuo de
+                  avance.</li>
+              </ul>
+
+              <div class="tag-row draft-card__tags seq-step seq-step--4">
+                <span class="draft-tag draft-tag--earth">UANL</span>
+                <span class="draft-tag">Comunicación Técnica</span>
+                <span class="draft-tag draft-tag--earth">Documentación</span>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <!-- Matriz de habilidades técnicas e idiomas -->
+        <div class="subsection-block">
+          <div class="subsection-header" data-draft-item>
+            <h2 class="subsection-title">Capacidades Técnicas &amp; Idiomas</h2>
+            <span class="subsection-note">Defensa operativa, redes y administración de sistemas</span>
+          </div>
+
+          <div class="skills-grid" id="skills-grid">
+            <!-- Renderizado modular desde portfolio-data.js -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         SECCIÓN 02: PROYECTOS
+    ========================================================== -->
+    <section class="draft-section draft-section--alt" id="proyectos" aria-labelledby="heading-proyectos"
+      data-draft-section>
+      <div class="container">
+        <div class="folio-header" data-draft-item data-entry-kind="folio">
+          <div class="folio-header__left">
+            <span class="folio-index">02</span>
+            <svg class="folio-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"
+              stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="3.5" y="4.5" width="17" height="15" rx="2.5" />
+              <path d="M7.5 9.5L10.5 12L7.5 14.5M12.5 14.5H16.5" />
+            </svg>
+            <span class="folio-kicker">Proyectos &amp; Laboratorios</span>
+          </div>
+          <span class="folio-meta">Arquitectura · Auditoría · Automatización</span>
+          <span class="guide-rule" aria-hidden="true"></span>
+        </div>
+
+        <div class="section-intro-row">
+          <div class="section-intro-copy">
+            <h2 class="section-title" id="heading-proyectos" data-draft-item>
+              Proyectos &amp; Laboratorios Técnicos
+            </h2>
+            <p class="section-lead" data-draft-item>
+              Iniciativas enfocadas en resolver problemas concretos de control de accesos, trazabilidad, segmentación de
+              red y visibilidad defensiva.
+            </p>
+          </div>
+
+          <div class="filter-bar" role="group" aria-label="Filtrar proyectos por área" data-draft-item>
+            <button class="filter-btn is-active" type="button" data-project-filter="all"
+              aria-pressed="true">Todos</button>
+            <button class="filter-btn" type="button" data-project-filter="iam" aria-pressed="false">IAM &amp;
+              Gobierno</button>
+            <button class="filter-btn" type="button" data-project-filter="redes" aria-pressed="false">Redes &amp;
+              Perímetro</button>
+            <button class="filter-btn" type="button" data-project-filter="defensa" aria-pressed="false">Seguridad
+              Defensiva</button>
+          </div>
+        </div>
+
+        <div class="projects-grid" id="projects-grid">
+          <!-- Renderizado modular desde portfolio-data.js -->
+        </div>
+
+        <!-- Acceso limpio a repositorios en GitHub -->
+        <div class="projects-repo-strip">
+          <div class="projects-repo-strip__info" data-draft-item>
+            <h3 class="projects-repo-strip__title">Código fuente y scripts de automatización</h3>
+            <p class="projects-repo-strip__desc">
+              Explora los repositorios de conciliación IAM, hardening y laboratorios técnicos directamente en mi perfil
+              de GitHub (<code>@whoisgiov2</code>).
+            </p>
+          </div>
+
+          <div class="projects-repo-strip__cta" data-draft-item>
+            <a href="https://github.com/whoisgiov2" target="_blank" rel="noopener noreferrer" class="github-draft-btn"
+              data-github-link aria-label="Explorar proyectos y repositorios de whoisgiov2 en GitHub">
+              <div class="github-draft-btn__border-wrap" aria-hidden="true">
+                <div class="github-draft-btn__conic"></div>
+                <div class="github-draft-btn__conic github-draft-btn__conic--active"></div>
+              </div>
+
+              <div class="github-draft-btn__surface" aria-hidden="true">
+                <div class="github-draft-btn__shine"></div>
+              </div>
+
+              <svg class="github-draft-btn__octocat" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path fill-rule="evenodd"
+                  d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"
+                  clip-rule="evenodd"></path>
+              </svg>
+
+              <div class="github-draft-btn__divider" aria-hidden="true"></div>
+
+              <span class="github-draft-btn__label">Proyectos en GitHub</span>
+
+              <div class="github-draft-btn__star-wrap" aria-hidden="true">
+                <div class="github-draft-btn__ring"></div>
+
+                <div class="github-draft-btn__particle github-draft-btn__particle--1"></div>
+                <div class="github-draft-btn__particle github-draft-btn__particle--2"></div>
+                <div class="github-draft-btn__particle github-draft-btn__particle--3"></div>
+                <div class="github-draft-btn__particle github-draft-btn__particle--4"></div>
+                <div class="github-draft-btn__particle github-draft-btn__particle--5"></div>
+                <div class="github-draft-btn__particle github-draft-btn__particle--6"></div>
+
+                <svg class="github-draft-btn__star-outline" fill="none" stroke="currentColor" stroke-width="1.6"
+                  viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z">
+                  </path>
+                </svg>
+
+                <svg class="github-draft-btn__star-solid" fill="currentColor" viewBox="0 0 24 24">
+                  <path fill-rule="evenodd"
+                    d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z"
+                    clip-rule="evenodd"></path>
+                </svg>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         SECCIÓN 03: CERTIFICACIONES
+    ========================================================== -->
+    <section class="draft-section" id="certificaciones" aria-labelledby="heading-certificaciones" data-draft-section>
+      <div class="container">
+        <div class="folio-header" data-draft-item data-entry-kind="folio">
+          <div class="folio-header__left">
+            <span class="folio-index">03</span>
+            <svg class="folio-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"
+              stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="9.5" r="5.5" />
+              <path d="M9 14.3L7.5 21L12 18.6L16.5 21L15 14.3" />
+            </svg>
+            <span class="folio-kicker">Formación &amp; Credenciales</span>
+          </div>
+          <span class="folio-meta">Google · Red Hat · Fortinet</span>
+          <span class="guide-rule" aria-hidden="true"></span>
+        </div>
+
+        <div class="section-intro-row">
+          <div class="section-intro-copy">
+            <h2 class="section-title" id="heading-certificaciones" data-draft-item>
+              Certificaciones en Ciberseguridad y Sistemas
+            </h2>
+            <p class="section-lead" data-draft-item>
+              Acreditaciones técnicas centradas en operaciones defensivas SOC/SIEM, administración Linux empresarial
+              (RHEL), arquitectura de amenazas y seguridad perimetral.
+            </p>
+          </div>
+
+          <div class="cert-summary-pill" data-draft-item>
+            <svg class="cert-summary-pill__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M12 3L4.8 6.2V11.5C4.8 16.2 7.9 20.2 12 21.4C16.1 20.2 19.2 16.2 19.2 11.5V6.2L12 3Z" />
+              <path d="M9 12.2L11.1 14.3L15.3 9.9" />
+            </svg>
+            <strong class="cert-summary-pill__value">
+              <span data-cert-count>06</span> Acreditadas
+              <svg class="brush-stroke brush-stroke--pill" viewBox="0 0 132 10" fill="none" preserveAspectRatio="none"
+                aria-hidden="true">
+                <path
+                  d="M2.5 6.4C1.4 4.7 3.6 3.1 8.6 2.9C46 1.8 92 2.6 130 5.5C90 7.1 45 8.3 9.4 8.4C4.4 8.4 3.1 7.3 2.5 6.4Z"
+                  fill="currentColor" />
+              </svg>
+            </strong>
+          </div>
+        </div>
+
+        <div class="certifications-grid" id="certifications-grid">
+          <!-- Renderizado modular desde portfolio-data.js -->
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         SECCIÓN 04: CONTACTO SEGURO
+    ========================================================== -->
+    <section class="draft-section draft-section--alt draft-section--contact" id="contacto"
+      aria-labelledby="heading-contacto" data-draft-section>
+      <div class="container">
+        <div class="folio-header" data-draft-item data-entry-kind="folio">
+          <div class="folio-header__left">
+            <span class="folio-index">04</span>
+            <svg class="folio-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"
+              stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="3.5" y="6" width="17" height="12.5" rx="2" />
+              <path d="M4.2 7L12 12.6L19.8 7" />
+            </svg>
+            <span class="folio-kicker">Canal de Comunicación Directo</span>
+          </div>
+          <span class="folio-meta">Cero rastreadores · Sanitización local</span>
+          <span class="guide-rule" aria-hidden="true"></span>
+        </div>
+
+        <div class="section-intro-row">
+          <div class="section-intro-copy">
+            <h2 class="section-title" id="heading-contacto" data-draft-item>
+              Contacto Seguro
+              <svg class="brush-stroke brush-stroke--section" viewBox="0 0 196 11" fill="none"
+                preserveAspectRatio="none" aria-hidden="true">
+                <path
+                  d="M3 6.8C1.8 5.0 4.2 3.3 9.8 3.1C64 1.6 134 2.5 194 5.8C136 7.4 66 8.9 10.8 9.0C5.1 9.0 3.7 7.9 3 6.8Z"
+                  fill="currentColor" />
+              </svg>
+            </h2>
+            <p class="section-lead" data-draft-item>
+              Comunicación directa y libre de intermediarios. Copia los datos verificados en un clic, conecta por
+              LinkedIn mediante código QR o prepara tu mensaje desde el bloque técnico.
+            </p>
+          </div>
+        </div>
+
+        <div class="contact-layout">
+          <aside class="contact-channels" aria-label="Canales directos y verificación">
+            <div class="channel-card interactive-sheet" data-draft-item data-seq-card>
+              <div class="channel-card__head seq-step seq-step--1">
+                <span class="channel-card__label-wrap">
+                  <svg class="channel-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <rect x="3.5" y="6" width="17" height="12.5" rx="2" />
+                    <path d="M4.2 7L12 12.6L19.8 7" />
+                  </svg>
+                  <span class="channel-card__label">Correo directo</span>
+                </span>
+                <span class="draft-stamp" id="email-copy-stamp" aria-hidden="true">Copiado</span>
+              </div>
+              <div class="channel-card__email-row seq-step seq-step--2">
+                <a class="channel-card__email" href="mailto:giovanni.reyesamed@gmail.com">
+                  giovanni.reyesamed@gmail.com
+                </a>
+                <button class="btn btn--small btn--outline btn--morph" id="copy-email-btn" type="button"
+                  data-copy-value="giovanni.reyesamed@gmail.com" data-stamp-target="email-copy-stamp">
+                  <span class="morph-icon" aria-hidden="true">
+                    <svg class="morph-icon__copy" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                      stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                      <rect x="9" y="9" width="10.5" height="10.5" rx="1.8" />
+                      <path d="M6 15H5.2C4.5 15 4 14.5 4 13.8V5.2C4 4.5 4.5 4 5.2 4H13.8C14.5 4 15 4.5 15 5.2V6" />
+                    </svg>
+                    <svg class="morph-icon__check" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                      stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M5 12.5L9.5 17L19 7.5" />
+                    </svg>
+                  </span>
+                  <span class="btn__label-text">Copiar</span>
+                </button>
+              </div>
+              <p class="channel-card__hint" id="copy-feedback" role="status" aria-live="polite"></p>
+            </div>
+
+            <div class="channel-card interactive-sheet" data-draft-item data-seq-card>
+              <div class="channel-card__head seq-step seq-step--1">
+                <span class="channel-card__label-wrap">
+                  <svg class="channel-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path
+                      d="M12 20.5C16 16.5 18.5 13.4 18.5 9.8C18.5 6.2 15.6 3.5 12 3.5C8.4 3.5 5.5 6.2 5.5 9.8C5.5 13.4 8 16.5 12 20.5Z" />
+                    <circle cx="12" cy="9.8" r="2.3" />
+                  </svg>
+                  <span class="channel-card__label">Ubicación y modalidad</span>
+                </span>
+                <span class="draft-stamp" id="card-copy-stamp" aria-hidden="true">Copiado</span>
+              </div>
+              <div class="channel-card__email-row seq-step seq-step--2">
+                <div>
+                  <p class="channel-card__value">Escobedo, Nuevo León, México</p>
+                  <p class="channel-card__sub">Área Metropolitana de Monterrey · Presencial, híbrido o remoto.</p>
+                </div>
+                <button class="btn btn--small btn--outline btn--morph" id="copy-vcard-btn" type="button"
+                  data-copy-value="Carlos Giovanni Reyes Medina | Ciberseguridad & Gobierno de TI (UANL) | Escobedo, N.L., México | giovanni.reyesamed@gmail.com"
+                  data-stamp-target="card-copy-stamp">
+                  <span class="morph-icon" aria-hidden="true">
+                    <svg class="morph-icon__copy" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                      stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                      <rect x="9" y="9" width="10.5" height="10.5" rx="1.8" />
+                      <path d="M6 15H5.2C4.5 15 4 14.5 4 13.8V5.2C4 4.5 4.5 4 5.2 4H13.8C14.5 4 15 4.5 15 5.2V6" />
+                    </svg>
+                    <svg class="morph-icon__check" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                      stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M5 12.5L9.5 17L19 7.5" />
+                    </svg>
+                  </span>
+                  <span class="btn__label-text">Copiar ficha</span>
+                </button>
+              </div>
+            </div>
+
+            <div class="channel-card channel-card--linkedin interactive-sheet" id="linkedin-qr-card" data-draft-item
+              data-seq-card>
+              <div class="channel-card__head seq-step seq-step--1">
+                <span class="channel-card__label-wrap">
+                  <svg class="channel-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <rect x="4" y="4" width="6.5" height="6.5" rx="1" />
+                    <rect x="13.5" y="4" width="6.5" height="6.5" rx="1" />
+                    <rect x="4" y="13.5" width="6.5" height="6.5" rx="1" />
+                    <path d="M14 14H16.5V16.5H14zM17.5 17.5H20V20H17.5zM17.5 14H20M14 18.5H16" />
+                  </svg>
+                  <span class="channel-card__label">LinkedIn · Código QR</span>
+                </span>
+              </div>
+              <div class="linkedin-qr-layout seq-step seq-step--2">
+                <div class="linkedin-qr-frame">
+                  <svg class="qr-viewfinder" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2.5"
+                    stroke-linecap="round" aria-hidden="true">
+                    <path d="M4 20V4H20M80 4H96V20M96 80V96H80M20 96H4V80" />
+                  </svg>
+                  <img class="linkedin-qr-img" src="assets/QR_CGRM_LK.jpeg"
+                    alt="Código QR para abrir el perfil de LinkedIn de Carlos Giovanni Reyes Medina" width="108"
+                    height="108" loading="lazy" decoding="async" />
+                </div>
+                <div class="linkedin-qr-copy">
+                  <p class="channel-card__value">Conectar en LinkedIn</p>
+                  <p class="channel-card__sub">Escanea con tu cámara para abrir el perfil profesional directamente.</p>
+                  <div class="linkedin-qr-actions">
+                    <button class="btn btn--small btn--outline" id="toggle-qr-size-btn" type="button"
+                      aria-expanded="false">
+                      <svg class="btn__icon btn__icon--left" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M15 4H20V9M9 20H4V15M20 4L13.5 10.5M4 20L10.5 13.5" />
+                      </svg>
+                      <span id="toggle-qr-label">Ampliar QR</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="hygiene-inline-note" data-draft-item>
+              <svg class="hygiene-inline-note__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M12 3L4.8 6.2V11.5C4.8 16.2 7.9 20.2 12 21.4C16.1 20.2 19.2 16.2 19.2 11.5V6.2L12 3Z" />
+                <path d="M9 12.2L11.1 14.3L15.3 9.9" />
+              </svg>
+              <p>
+                <strong>Privacidad por diseño:</strong> sin analítica externa ni envíos silenciosos; atención en Español
+                (Nativo) e Inglés (B2+).
+              </p>
+            </div>
+          </aside>
+
+          <form class="contact-composer contact-composer--iso" id="secure-contact-form" novalidate data-draft-item
+            data-seq-card>
+            <div class="composer-header seq-step seq-step--1">
+              <div class="composer-header__title-group">
+                <svg class="composer-header__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <rect x="4.5" y="10.5" width="15" height="10" rx="2" />
+                  <path d="M8 10.5V7.5C8 5.3 9.8 3.5 12 3.5C14.2 3.5 16 5.3 16 7.5V10.5" />
+                </svg>
+                <span class="composer-header__title">Mensaje Estructurado</span>
+              </div>
+              <div class="composer-header__right">
+                <span class="draft-stamp" id="payload-copy-stamp" aria-hidden="true">Copiado</span>
+                <span class="composer-header__badge">Validación local</span>
+              </div>
+            </div>
+
+            <p class="composer-subcopy seq-step seq-step--1">
+              Completa los niveles del formulario; los campos se validan y sanitizan localmente antes de preparar tu
+              correo hacia <code>giovanni.reyesamed@gmail.com</code>.
+            </p>
+
+            <!-- Pila isométrica limpia sin rejillas competidoras -->
+            <div class="iso-stage seq-step seq-step--2">
+              <ul class="iso-wrapper">
+                <li class="iso-step" style="--i:5;">
+                  <label class="sr-only" for="contact-name">Nombre o contacto</label>
+                  <input class="iso-input" id="contact-name" name="name" type="text" maxlength="80" autocomplete="name"
+                    placeholder="01 · Nombre o contacto *" required />
+                </li>
+
+                <li class="iso-step" style="--i:4;">
+                  <label class="sr-only" for="contact-phone">Teléfono u organización</label>
+                  <input class="iso-input" id="contact-phone" name="phone" type="tel" maxlength="70" autocomplete="tel"
+                    placeholder="02 · Teléfono u organización *" required />
+                </li>
+
+                <li class="iso-step" style="--i:3;">
+                  <label class="sr-only" for="contact-email">Correo electrónico</label>
+                  <input class="iso-input" id="contact-email" name="email" type="email" maxlength="100"
+                    autocomplete="email" placeholder="03 · Correo electrónico (E-mail) *" required />
+                </li>
+
+                <li class="iso-step iso-step--message" style="--i:2;">
+                  <label class="sr-only" for="contact-message">Asunto o detalle técnico</label>
+                  <input class="iso-input" id="contact-message" name="message" type="text" maxlength="600"
+                    placeholder="04 · Alcance o mensaje (IAM, Redes, Vacante) *" required />
+                </li>
+
+                <li class="iso-step iso-step--submit" style="--i:1;">
+                  <button class="iso-submit" type="submit">
+                    <span>Preparar correo seguro</span>
+                    <span class="iso-submit__arrow" aria-hidden="true">→</span>
+                  </button>
+                </li>
+              </ul>
+            </div>
+
+            <div class="form-field form-field--checkbox seq-step seq-step--3">
+              <input class="form-checkbox" id="contact-verify" name="verify" type="checkbox" required />
+              <label class="form-checkbox-label" for="contact-verify">
+                Confirmo que el mensaje se abrirá en mi cliente de correo o se copiará manualmente sin adjuntos
+                ejecutables ni enlaces no solicitados.
+              </label>
+            </div>
+
+            <div class="composer-status" id="composer-status" role="status" aria-live="polite"></div>
+
+            <div class="composer-footer-bar seq-step seq-step--4">
+              <span class="composer-footer-note">giovanni.reyesamed@gmail.com</span>
+              <button class="btn btn--small btn--outline btn--morph" id="copy-payload-btn" type="button">
+                <span class="morph-icon" aria-hidden="true">
+                  <svg class="morph-icon__copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="9" y="9" width="10.5" height="10.5" rx="1.8" />
+                    <path d="M6 15H5.2C4.5 15 4 14.5 4 13.8V5.2C4 4.5 4.5 4 5.2 4H13.8C14.5 4 15 4.5 15 5.2V6" />
+                  </svg>
+                  <svg class="morph-icon__check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M5 12.5L9.5 17L19 7.5" />
+                  </svg>
+                </span>
+                <span class="btn__label-text">Copiar texto estructurado</span>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container site-footer__inner">
+      <p class="site-footer__identity">
+        <strong>Carlos Giovanni Reyes Medina</strong> · Seguridad en TI (UANL) · Escobedo, N.L., México
+      </p>
+      <p class="site-footer__note">
+        Diseño editorial <em>Draft</em> · Alto contraste · Privacidad por diseño
+      </p>
+    </div>
+  </footer>
+  <script src="scripts/bundle.min.js" defer></script>
+</body>
+
+</html>

@@ -1,0 +1,184 @@
+/* ==========================================================================
+   COREOGRAFÍA DE ENTRADA INDEPENDIENTE, TRAZADO Y SALIDA HACIA EL CENTRO
+   - Entradas escalonadas por bloque + secuencia interna (.seq-step)
+   - Líneas guía (.guide-rule) y trazos focales (.brush-stroke) con dibujo progresivo
+   - Salida continua hacia el propio centro por elemento al hacer scroll
+   - Composición limpia con elevación táctil (--hover-y) en GPU
+   - Respeto estricto de prefers-reduced-motion
+   ========================================================================== */
+
+[data-draft-section] {
+  opacity: var(--section-exit-opacity, 1);
+  will-change: opacity;
+}
+
+[data-draft-item] {
+  --enter-y: 0px;
+  --enter-scale: 1;
+  --enter-opacity: 1;
+  --exit-scale: 1;
+  --exit-opacity: 1;
+
+  transform-origin: center center;
+  opacity: calc(var(--enter-opacity) * var(--exit-opacity));
+  transform:
+    translate3d(0, calc(var(--enter-y) + var(--hover-y, 0px)), 0) scale(calc(var(--enter-scale) * var(--exit-scale)));
+  transition:
+    opacity var(--duration-enter) var(--ease-draft),
+    transform var(--duration-enter) var(--ease-draft),
+    border-color 220ms ease,
+    background-color 220ms ease,
+    box-shadow 220ms ease;
+  will-change: transform, opacity;
+}
+
+/* Estado previo a entrar en escena */
+.js-motion-enabled [data-draft-item]:not(.is-entered) {
+  --enter-y: 16px;
+  --enter-scale: 0.982;
+  --enter-opacity: 0;
+}
+
+.js-motion-enabled [data-draft-item].is-entered {
+  transition-delay: calc(var(--enter-stagger, 0) * 52ms);
+}
+
+/* Durante la salida por scroll, respuesta directa sin retraso de entrada */
+.js-motion-enabled [data-draft-item].is-exiting {
+  transition-duration: 95ms;
+  transition-delay: 0ms;
+}
+
+/* Líneas guía de especificación que se trazan horizontalmente al entrar */
+.js-motion-enabled [data-draft-item]:not(.is-entered) .guide-rule {
+  transform: scaleX(0);
+}
+
+.js-motion-enabled [data-draft-item].is-entered .guide-rule {
+  transform: scaleX(1);
+  transition: transform 680ms var(--ease-draft) calc(var(--enter-stagger, 0) * 45ms + 80ms);
+}
+
+/* Dibujo progresivo de trazos focales (pincel/marcador afilado) al entrar en vista */
+.js-motion-enabled [data-draft-item]:not(.is-entered) .brush-stroke {
+  clip-path: inset(0 100% 0 0);
+  opacity: 0;
+}
+
+.js-motion-enabled [data-draft-item].is-entered .brush-stroke {
+  clip-path: inset(0 0% 0 0);
+  opacity: 0.88;
+  transition:
+    clip-path 560ms var(--ease-draft) calc(var(--enter-stagger, 0) * 45ms + 160ms),
+    opacity 320ms ease calc(var(--enter-stagger, 0) * 45ms + 140ms);
+}
+
+/* Secuencia interna de sub-elementos dentro de fichas independientes ([data-seq-card]) */
+.js-motion-enabled [data-seq-card]:not(.is-entered) .seq-step {
+  opacity: 0;
+  transform: translate3d(0, 8px, 0);
+}
+
+.js-motion-enabled [data-seq-card].is-entered .seq-step {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+  transition:
+    opacity 420ms var(--ease-draft),
+    transform 420ms var(--ease-draft);
+}
+
+.js-motion-enabled [data-seq-card].is-entered .seq-step--1 {
+  transition-delay: calc(var(--enter-stagger, 0) * 52ms + 30ms);
+}
+
+.js-motion-enabled [data-seq-card].is-entered .seq-step--2 {
+  transition-delay: calc(var(--enter-stagger, 0) * 52ms + 95ms);
+}
+
+.js-motion-enabled [data-seq-card].is-entered .seq-step--3 {
+  transition-delay: calc(var(--enter-stagger, 0) * 52ms + 160ms);
+}
+
+.js-motion-enabled [data-seq-card].is-entered .seq-step--4 {
+  transition-delay: calc(var(--enter-stagger, 0) * 52ms + 220ms);
+}
+
+/* Pulso sutil del estado operativo */
+@keyframes draft-pulse {
+
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.95;
+  }
+
+  50% {
+    transform: scale(1.25);
+    opacity: 0.55;
+  }
+}
+
+.status-pill__dot {
+  animation: draft-pulse 2.6s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  [data-draft-section] {
+    opacity: 1 !important;
+    will-change: auto;
+  }
+
+  [data-draft-item],
+  .js-motion-enabled [data-draft-item],
+  .js-motion-enabled [data-draft-item]:not(.is-entered),
+  .js-motion-enabled [data-draft-item].is-exiting,
+  .js-motion-enabled [data-seq-card]:not(.is-entered) .seq-step,
+  .js-motion-enabled [data-seq-card].is-entered .seq-step {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+    will-change: auto;
+  }
+
+  .js-motion-enabled [data-draft-item]:not(.is-entered) .guide-rule,
+  .js-motion-enabled [data-draft-item].is-entered .guide-rule {
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .js-motion-enabled [data-draft-item]:not(.is-entered) .brush-stroke,
+  .js-motion-enabled [data-draft-item].is-entered .brush-stroke,
+  .card-taper-stroke {
+    clip-path: none !important;
+    transition: none !important;
+  }
+
+  .interactive-sheet:hover,
+  .interactive-sheet:focus-visible,
+  .interactive-sheet:focus-within,
+  .draft-tag:hover,
+  .filter-btn:hover,
+  .btn:hover {
+    --hover-y: 0px !important;
+    transform: none !important;
+  }
+
+  .morph-icon__copy,
+  .morph-icon__check,
+  .svg-sweep-hand,
+  .svg-draw-check,
+  .qr-viewfinder,
+  .cert-card__seal-icon,
+  .icon-chip {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .status-pill__dot {
+    animation: none;
+  }
+}
