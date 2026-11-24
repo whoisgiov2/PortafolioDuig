@@ -59,6 +59,33 @@
     'arrow-up-right': [
       { tag: 'path', attrs: { d: 'M7 17L17 7' } },
       { tag: 'path', attrs: { d: 'M9 7H17V15' } }
+    ],
+    'issuer-redhat': [
+      { tag: 'path', attrs: { d: 'M4 15.2C4 17.5 7.6 19.2 12 19.2C16.4 19.2 20 17.5 20 15.2C20 13.7 18.6 12.6 16.9 12L15.4 7.3C15.1 6.3 14.1 5.9 13.1 6.3L11.5 6.9L9.8 6.2C8.9 5.8 7.9 6.3 7.6 7.3L6.4 11.9C4.9 12.6 4 13.8 4 15.2Z' } },
+      { tag: 'path', attrs: { d: 'M6.8 12.3C8.5 13.4 10.7 13.8 12.9 13.6C14.7 13.4 16.1 12.8 17 12.1', class: 'svg-accent-part' } }
+    ],
+    'issuer-fortinet': [
+      { tag: 'rect', attrs: { x: '3.5', y: '5.5', width: '4.5', height: '3.4', rx: '0.8', fill: 'currentColor', stroke: 'none' } },
+      { tag: 'rect', attrs: { x: '9.75', y: '5.5', width: '4.5', height: '3.4', rx: '0.8', fill: 'currentColor', stroke: 'none' } },
+      { tag: 'rect', attrs: { x: '16', y: '5.5', width: '4.5', height: '3.4', rx: '0.8', fill: 'currentColor', stroke: 'none' } },
+      { tag: 'rect', attrs: { x: '3.5', y: '10.3', width: '4.5', height: '3.4', rx: '0.8', fill: 'currentColor', stroke: 'none' } },
+      { tag: 'rect', attrs: { x: '16', y: '10.3', width: '4.5', height: '3.4', rx: '0.8', fill: 'currentColor', stroke: 'none' } },
+      { tag: 'rect', attrs: { x: '3.5', y: '15.1', width: '4.5', height: '3.4', rx: '0.8', fill: 'currentColor', stroke: 'none' } },
+      { tag: 'rect', attrs: { x: '9.75', y: '15.1', width: '4.5', height: '3.4', rx: '0.8', fill: 'currentColor', stroke: 'none' } },
+      { tag: 'rect', attrs: { x: '16', y: '15.1', width: '4.5', height: '3.4', rx: '0.8', fill: 'currentColor', stroke: 'none' } }
+    ],
+    'issuer-google': [
+      { tag: 'path', attrs: { d: 'M12 3L4.8 6.2V11.5C4.8 16.2 7.9 20.2 12 21.4C16.1 20.2 19.2 16.2 19.2 11.5V6.2L12 3Z' } },
+      { tag: 'path', attrs: { d: 'M15.2 10.6C14.7 9.4 13.5 8.6 12 8.6C10.1 8.6 8.6 10.1 8.6 12C8.6 13.9 10.1 15.4 12 15.4C13.8 15.4 15.1 14.2 15.3 12.5H12.3', class: 'svg-accent-part' } }
+    ],
+    'rotate-3d': [
+      { tag: 'path', attrs: { d: 'M4.5 12A7.5 7.5 0 0 1 17.5 6.8' } },
+      { tag: 'path', attrs: { d: 'M14.5 7H18V3.5' } },
+      { tag: 'path', attrs: { d: 'M19.5 12A7.5 7.5 0 0 1 6.5 17.2' } },
+      { tag: 'path', attrs: { d: 'M9.5 17H6V20.5' } }
+    ],
+    'close-x': [
+      { tag: 'path', attrs: { d: 'M6 6L18 18M18 6L6 18' } }
     ]
   };
 

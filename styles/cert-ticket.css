@@ -1,0 +1,628 @@
+/* ==========================================================================
+   MODAL Y TICKET 3D MANIPULABLE PARA CERTIFICACIONES CREDLY (ESTILO DRAFT)
+   Inspirado en el ticket de Uiverse (zeeshan_2112), adaptado 100% a la paleta:
+   Superficies/acentos: #EBE2CC, #DED6C1, #CFC6B1, #B7B09E, #E6F2DD, #B1D3B9, #88BDA4, #659287
+   Textos, iconos, código de barras y trazos: #24211A, #3A352B, #50493C, #1B2E29, #29463E, #375B51
+   ========================================================================== */
+
+body.is-modal-open {
+  overflow: hidden;
+}
+
+.cert-ticket-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 320;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.25rem;
+  background-color: rgba(36, 33, 26, 0.56);
+  backdrop-filter: blur(8px);
+  opacity: 0;
+  transition: opacity 240ms var(--ease-draft);
+}
+
+.cert-ticket-modal.is-open {
+  opacity: 1;
+}
+
+.cert-ticket-modal[hidden] {
+  display: none !important;
+}
+
+.cert-ticket-modal__dialog {
+  width: min(100%, 500px);
+  max-height: calc(100dvh - 2rem);
+  overflow-y: auto;
+  display: grid;
+  gap: 0.9rem;
+  padding: 1.15rem;
+  background-color: var(--palette-earth-100);
+  border: 1px solid rgba(183, 176, 158, 0.8);
+  border-radius: var(--radius-draft);
+  box-shadow: 0 24px 54px rgba(36, 33, 26, 0.28);
+  transform: scale(0.95) translateY(8px);
+  transition: transform 280ms var(--ease-draft);
+}
+
+.cert-ticket-modal.is-open .cert-ticket-modal__dialog {
+  transform: scale(1) translateY(0);
+}
+
+.ticket-modal__topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.ticket-modal__hint {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  font-weight: 500;
+  color: var(--ink-sage-800);
+}
+
+.ticket-modal__hint-icon {
+  width: 15px;
+  height: 15px;
+  color: var(--palette-sage-400);
+  flex-shrink: 0;
+}
+
+.ticket-modal__close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border-radius: var(--radius-pill);
+  background-color: var(--palette-earth-200);
+  border: 1px solid rgba(183, 176, 158, 0.8);
+  color: var(--ink-earth-950);
+  cursor: pointer;
+  transition: background-color 160ms ease, border-color 160ms ease, transform 160ms ease;
+}
+
+.ticket-modal__close:hover,
+.ticket-modal__close:focus-visible {
+  background-color: var(--palette-sage-200);
+  border-color: var(--ink-sage-800);
+  color: var(--ink-sage-950);
+  transform: scale(1.06);
+}
+
+.ticket-modal__close svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* Escenario 3D interactivo */
+.ticket-stage {
+  --glint-x: 50%;
+  --glint-y: 35%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.15rem 0.75rem;
+  perspective: 1150px;
+  touch-action: none;
+  cursor: grab;
+  user-select: none;
+  background-color: rgba(222, 214, 193, 0.45);
+  border-radius: var(--radius-draft);
+}
+
+.ticket-stage.is-dragging {
+  cursor: grabbing;
+}
+
+/* Contenedor 3D sin overflow:hidden para preservar preserve-3d */
+.cert-ticket-3d {
+  position: relative;
+  width: min(100%, 380px);
+  font-family: var(--font-sans);
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.ticket-face {
+  position: relative;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  border-radius: 12px;
+  box-shadow:
+    0 18px 36px rgba(36, 33, 26, 0.18),
+    0 0 0 1px rgba(101, 146, 135, 0.35);
+}
+
+.ticket-face--front {
+  transform: rotateY(0deg);
+}
+
+.ticket-face--back {
+  position: absolute;
+  inset: 0;
+  transform: rotateY(180deg);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Reflejo especular sutil dependiente de orientación */
+.ticket-face::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 12px;
+  pointer-events: none;
+  background: radial-gradient(
+    circle at var(--glint-x) var(--glint-y),
+    rgba(230, 242, 221, 0.55) 0%,
+    rgba(177, 211, 185, 0.14) 36%,
+    transparent 70%
+  );
+  z-index: 5;
+}
+
+/* Cuerpo superior muescado del ticket */
+.t-main {
+  padding: 1.45rem 1.45rem 1.35rem;
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at bottom left, transparent 13px, var(--palette-earth-100) 13.5px),
+    radial-gradient(circle at bottom right, transparent 13px, var(--palette-earth-100) 13.5px);
+  background-size: 51% 100%;
+  background-position: bottom left, bottom right;
+  background-repeat: no-repeat;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+
+.t-main--back {
+  flex: 1;
+  overflow-y: auto;
+  background:
+    radial-gradient(circle at bottom left, transparent 13px, var(--palette-sage-100) 13.5px),
+    radial-gradient(circle at bottom right, transparent 13px, var(--palette-sage-100) 13.5px);
+  background-size: 51% 100%;
+  background-position: bottom left, bottom right;
+  background-repeat: no-repeat;
+}
+
+.t-content {
+  position: relative;
+  z-index: 1;
+}
+
+.t-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.05rem;
+}
+
+.t-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.92rem;
+  letter-spacing: -0.01em;
+  color: var(--ink-sage-950);
+}
+
+.t-logo-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  background-color: var(--palette-sage-100);
+  border: 1px solid rgba(101, 146, 135, 0.65);
+  color: var(--ink-sage-950);
+}
+
+.t-logo-chip svg {
+  width: 17px;
+  height: 17px;
+}
+
+.t-type {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ink-sage-950);
+  background-color: var(--palette-sage-100);
+  border: 1px solid rgba(101, 146, 135, 0.7);
+  padding: 0.24rem 0.6rem;
+  border-radius: var(--radius-pill);
+  font-weight: 600;
+}
+
+.t-hero {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  margin-bottom: 0.65rem;
+}
+
+.t-badge-stage {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 84px;
+  height: 84px;
+  padding: 5px;
+  flex-shrink: 0;
+  border-radius: 12px;
+  background-color: var(--palette-earth-200);
+  border: 1px solid rgba(101, 146, 135, 0.52);
+  box-shadow: 0 6px 14px rgba(36, 33, 26, 0.12);
+}
+
+.t-badge-stage.is-fallback {
+  background-color: var(--palette-sage-100);
+  border-color: rgba(101, 146, 135, 0.65);
+  color: var(--ink-sage-950);
+}
+
+.t-badge-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 8px;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.t-badge-img[hidden] {
+  display: none;
+}
+
+.t-badge-fallback {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  color: var(--ink-sage-950);
+}
+
+.t-badge-fallback[hidden] {
+  display: none;
+}
+
+.t-badge-fallback svg {
+  width: 40px;
+  height: 40px;
+}
+
+.t-hero-copy {
+  min-width: 0;
+  flex: 1;
+}
+
+.t-title {
+  font-family: var(--font-display);
+  font-size: 1.24rem;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--ink-sage-950);
+  margin-bottom: 0.35rem;
+}
+
+.t-hero-copy .t-title {
+  margin-bottom: 0;
+  font-size: 1.12rem;
+  line-height: 1.22;
+}
+
+.t-subtitle {
+  color: var(--ink-sage-700);
+  font-size: 0.84rem;
+  line-height: 1.45;
+  margin-bottom: 1.15rem;
+}
+
+.t-details {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.85rem 1rem;
+  margin-bottom: 0.95rem;
+}
+
+.t-detail-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.14rem;
+}
+
+.t-label {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ink-earth-700);
+}
+
+.t-value {
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: var(--ink-earth-950);
+}
+
+.t-skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.34rem;
+}
+
+.t-skill-pill {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 500;
+  padding: 0.16rem 0.48rem;
+  border-radius: 5px;
+  background-color: var(--palette-sage-100);
+  color: var(--ink-sage-950);
+  border: 1px solid rgba(136, 189, 164, 0.6);
+}
+
+.t-main--back .t-skill-pill {
+  background-color: var(--palette-earth-100);
+  border-color: rgba(183, 176, 158, 0.75);
+  color: var(--ink-earth-950);
+}
+
+/* Línea de perforación sutil en puntos (sin border dashed ruidoso) */
+.t-perforation {
+  position: relative;
+  height: 0;
+  z-index: 3;
+}
+
+.t-perf-dots {
+  position: absolute;
+  left: 16px;
+  right: 16px;
+  top: -1px;
+  height: 2px;
+  background-image: radial-gradient(circle, rgba(101, 146, 135, 0.55) 1.2px, transparent 1.4px);
+  background-size: 8px 2px;
+  background-repeat: repeat-x;
+}
+
+/* Talón inferior muescado (Stub) */
+.t-stub {
+  padding: 1.15rem 1.45rem 1.25rem;
+  background:
+    radial-gradient(circle at top left, transparent 13px, var(--palette-sage-100) 13.5px),
+    radial-gradient(circle at top right, transparent 13px, var(--palette-sage-100) 13.5px);
+  background-size: 51% 100%;
+  background-position: top left, top right;
+  background-repeat: no-repeat;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.t-stub--back {
+  background:
+    radial-gradient(circle at top left, transparent 13px, var(--palette-earth-200) 13.5px),
+    radial-gradient(circle at top right, transparent 13px, var(--palette-earth-200) 13.5px);
+  background-size: 51% 100%;
+  background-position: top left, top right;
+  background-repeat: no-repeat;
+}
+
+.t-barcode-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  min-width: 0;
+}
+
+.t-barcode {
+  width: 124px;
+  height: 28px;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--ink-sage-950) 0,
+    var(--ink-sage-950) 2px,
+    transparent 2px,
+    transparent 4px,
+    var(--ink-sage-950) 4px,
+    var(--ink-sage-950) 5px,
+    transparent 5px,
+    transparent 8px,
+    var(--ink-sage-950) 8px,
+    var(--ink-sage-950) 12px,
+    transparent 12px,
+    transparent 15px,
+    var(--ink-sage-950) 15px,
+    var(--ink-sage-950) 16px,
+    transparent 16px,
+    transparent 18px
+  );
+  opacity: 0.88;
+}
+
+.t-barcode-id {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: var(--ink-sage-800);
+  letter-spacing: 0.08em;
+}
+
+.t-admit {
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.t-admit-text {
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ink-sage-700);
+}
+
+.t-admit-num {
+  font-family: var(--font-display);
+  font-size: 1.95rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--ink-sage-800);
+}
+
+/* Elementos específicos del reverso del ticket */
+.t-back-heading {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.t-badge-thumb {
+  display: block;
+  width: 32px;
+  height: 32px;
+  padding: 2px;
+  border-radius: 7px;
+  object-fit: contain;
+  background-color: var(--palette-earth-100);
+  border: 1px solid rgba(101, 146, 135, 0.55);
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
+  flex-shrink: 0;
+}
+
+.t-badge-thumb[hidden] {
+  display: none;
+}
+
+.t-back-criteria {
+  font-size: 0.84rem;
+  line-height: 1.5;
+  color: var(--ink-earth-800);
+  margin: 0.45rem 0 1rem;
+}
+
+.t-uuid-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  min-width: 0;
+  flex: 1;
+}
+
+.t-uuid-code {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--ink-earth-950);
+  word-break: break-all;
+}
+
+/* Barra de controles del modal */
+.ticket-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.55rem;
+}
+
+.ticket-controls__group {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.ticket-controls__verify {
+  margin-left: auto;
+}
+
+@media (max-width: 480px) {
+  .cert-ticket-modal {
+    padding: 0.75rem;
+  }
+
+  .cert-ticket-modal__dialog {
+    padding: 0.9rem;
+  }
+
+  .ticket-stage {
+    padding: 0.8rem 0.35rem;
+  }
+
+  .t-main,
+  .t-stub {
+    padding-inline: 1.1rem;
+  }
+
+  .t-hero {
+    gap: 0.72rem;
+  }
+
+  .t-badge-stage {
+    width: 70px;
+    height: 70px;
+  }
+
+  .t-title {
+    font-size: 1.1rem;
+  }
+
+  .t-hero-copy .t-title {
+    font-size: 1.02rem;
+  }
+
+  .t-details {
+    grid-template-columns: 1fr;
+    gap: 0.65rem;
+  }
+
+  .ticket-controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .ticket-controls__group,
+  .ticket-controls__verify {
+    width: 100%;
+  }
+
+  .ticket-controls__group .btn {
+    flex: 1 1 auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cert-ticket-modal,
+  .cert-ticket-modal__dialog,
+  .ticket-modal__close,
+  .cert-ticket-3d {
+    transition: none !important;
+  }
+}

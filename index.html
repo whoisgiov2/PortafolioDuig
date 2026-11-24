@@ -38,6 +38,7 @@
   <link rel="stylesheet" href="styles/github-btn.css" />
   <link rel="stylesheet" href="styles/iso-form.css" />
   <link rel="stylesheet" href="styles/cv-download.css" />
+  <link rel="stylesheet" href="styles/cert-ticket.css" />
   <link rel="stylesheet" href="styles/motion.css" />
   <noscript>
     <style>
@@ -270,7 +271,7 @@
 
             <a class="spec-card__footnote seq-step seq-step--3" href="#certificaciones">
               <span class="spec-card__metric">
-                <span data-cert-count>06</span>
+                <span data-cert-count>08</span>
                 <svg class="brush-stroke brush-stroke--metric" viewBox="0 0 64 10" fill="none"
                   preserveAspectRatio="none" aria-hidden="true">
                   <path
@@ -541,7 +542,7 @@
               <path d="M9 12.2L11.1 14.3L15.3 9.9" />
             </svg>
             <strong class="cert-summary-pill__value">
-              <span data-cert-count>06</span> Acreditadas
+              <span data-cert-count>08</span> Acreditadas
               <svg class="brush-stroke brush-stroke--pill" viewBox="0 0 132 10" fill="none" preserveAspectRatio="none"
                 aria-hidden="true">
                 <path
@@ -826,10 +827,175 @@
     </div>
   </footer>
 
+  <!-- Modal interactivo de Ticket 3D para inspección previa de credenciales Credly -->
+  <div class="cert-ticket-modal" id="cert-ticket-modal" role="dialog" aria-modal="true"
+    aria-labelledby="ticket-title-front" hidden>
+    <div class="cert-ticket-modal__dialog">
+      <div class="ticket-modal__topbar">
+        <span class="ticket-modal__hint">
+          <svg class="ticket-modal__hint-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"
+            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M4.5 12A7.5 7.5 0 0 1 17.5 6.8" />
+            <path d="M14.5 7H18V3.5" />
+            <path d="M19.5 12A7.5 7.5 0 0 1 6.5 17.2" />
+            <path d="M9.5 17H6V20.5" />
+          </svg>
+          <span>Arrastra para rotar el ticket 360°</span>
+        </span>
+        <button class="ticket-modal__close" id="ticket-close-btn" type="button" aria-label="Cerrar ticket de credencial">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            aria-hidden="true">
+            <path d="M6 6L18 18M18 6L6 18" />
+          </svg>
+        </button>
+      </div>
+
+      <div class="ticket-stage" id="ticket-stage">
+        <div class="cert-ticket-3d" id="cert-ticket-3d">
+          <!-- Cara frontal del ticket -->
+          <div class="ticket-face ticket-face--front">
+            <div class="t-main">
+              <div class="t-content">
+                <div class="t-header">
+                  <div class="t-logo">
+                    <span class="t-logo-chip" id="ticket-issuer-logo" aria-hidden="true"></span>
+                    <span id="ticket-issuer-name">Emisor</span>
+                  </div>
+                  <span class="t-type" id="ticket-badge-type">Credly</span>
+                </div>
+
+                <div class="t-hero">
+                  <div class="t-badge-stage" id="ticket-badge-stage">
+                    <img class="t-badge-img" id="ticket-badge-img" alt="" width="74" height="74" decoding="async"
+                      draggable="false" hidden />
+                    <span class="t-badge-fallback" id="ticket-badge-fallback" aria-hidden="true"></span>
+                  </div>
+                  <div class="t-hero-copy">
+                    <h3 class="t-title" id="ticket-title-front">Credencial</h3>
+                  </div>
+                </div>
+                <p class="t-subtitle" id="ticket-subtitle-front">Resumen técnico de la insignia.</p>
+
+                <div class="t-details">
+                  <div class="t-detail-item">
+                    <span class="t-label">Titular</span>
+                    <span class="t-value">Carlos G. Reyes M.</span>
+                  </div>
+                  <div class="t-detail-item">
+                    <span class="t-label">Plataforma</span>
+                    <span class="t-value" id="ticket-platform">Credly</span>
+                  </div>
+                  <div class="t-detail-item">
+                    <span class="t-label">Dominio</span>
+                    <span class="t-value" id="ticket-domain">Ciberseguridad</span>
+                  </div>
+                  <div class="t-detail-item">
+                    <span class="t-label">Estado</span>
+                    <span class="t-value">Acreditada</span>
+                  </div>
+                </div>
+
+                <div class="t-skills" id="ticket-skills-front"></div>
+              </div>
+            </div>
+
+            <div class="t-perforation" aria-hidden="true">
+              <div class="t-perf-dots"></div>
+            </div>
+
+            <div class="t-stub">
+              <div class="t-barcode-container">
+                <div class="t-barcode" aria-hidden="true"></div>
+                <span class="t-barcode-id" id="ticket-barcode-id">ID · CREDLY</span>
+              </div>
+              <div class="t-admit">
+                <div class="t-admit-text">Folio</div>
+                <div class="t-admit-num" id="ticket-folio-num">01</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Cara trasera del ticket (criterios, skills e ID completo) -->
+          <div class="ticket-face ticket-face--back">
+            <div class="t-main t-main--back">
+              <div class="t-content">
+                <div class="t-header">
+                  <div class="t-back-heading">
+                    <img class="t-badge-thumb" id="ticket-badge-thumb-back" alt="" width="30" height="30"
+                      decoding="async" draggable="false" aria-hidden="true" hidden />
+                    <span class="t-label">Criterios de emisión</span>
+                  </div>
+                  <span class="t-type">Reverso · Verificable</span>
+                </div>
+
+                <h4 class="t-title" id="ticket-title-back">Credencial</h4>
+                <p class="t-back-criteria" id="ticket-criteria-back"></p>
+
+                <span class="t-label">Competencias acreditadas</span>
+                <div class="t-skills" id="ticket-skills-back" style="margin-top: 0.4rem;"></div>
+              </div>
+            </div>
+
+            <div class="t-perforation" aria-hidden="true">
+              <div class="t-perf-dots"></div>
+            </div>
+
+            <div class="t-stub t-stub--back">
+              <div class="t-uuid-row">
+                <span class="t-label">Badge ID (Credly)</span>
+                <span class="t-uuid-code" id="ticket-uuid-full"></span>
+              </div>
+              <button class="btn btn--small btn--outline btn--morph" id="ticket-copy-id-btn" type="button">
+                <span class="morph-icon" aria-hidden="true">
+                  <svg class="morph-icon__copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="9" y="9" width="10.5" height="10.5" rx="1.8" />
+                    <path d="M6 15H5.2C4.5 15 4 14.5 4 13.8V5.2C4 4.5 4.5 4 5.2 4H13.8C14.5 4 15 4.5 15 5.2V6" />
+                  </svg>
+                  <svg class="morph-icon__check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M5 12.5L9.5 17L19 7.5" />
+                  </svg>
+                </span>
+                <span class="btn__label-text">Copiar ID</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ticket-controls">
+        <div class="ticket-controls__group">
+          <button class="btn btn--small btn--outline" id="ticket-flip-btn" type="button">
+            <svg class="btn__icon btn__icon--left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+              stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M4.5 12A7.5 7.5 0 0 1 17.5 6.8" />
+              <path d="M14.5 7H18V3.5" />
+              <path d="M19.5 12A7.5 7.5 0 0 1 6.5 17.2" />
+              <path d="M9.5 17H6V20.5" />
+            </svg>
+            <span id="ticket-flip-label">Voltear reverso</span>
+          </button>
+          <button class="btn btn--small btn--outline" id="ticket-reset-btn" type="button">Centrar eje</button>
+        </div>
+
+        <a class="btn btn--small btn--primary ticket-controls__verify" id="ticket-verify-link"
+          href="https://www.credly.com/" target="_blank" rel="noopener noreferrer">
+          <span id="ticket-verify-label">Verificar en Credly</span>
+          <svg class="btn__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85"
+            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M7 17L17 7M9 7H17V15" />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+
   <script src="scripts/data/portfolio-data.js" defer></script>
   <script src="scripts/data/cv-binary.js" defer></script>
   <script src="scripts/modules/icons.js" defer></script>
   <script src="scripts/modules/render-sections.js" defer></script>
+  <script src="scripts/modules/cert-ticket.js" defer></script>
   <script src="scripts/modules/loader.js" defer></script>
   <script src="scripts/modules/cv-download.js" defer></script>
   <script src="scripts/modules/scroll-choreography.js" defer></script>
