@@ -1,0 +1,364 @@
+/* ==========================================================================
+   FORMULARIO ISOMÉTRICO ADAPTADO A ESTÉTICA DRAFT (CONTACTO SEGURO)
+   Base: Uiverse.io by andrew-demchenk0, adaptado estrictamente a la paleta:
+   Superficies/biseles: #EBE2CC, #DED6C1, #CFC6B1, #B7B09E, #E6F2DD, #B1D3B9, #88BDA4, #659287
+   Textos, placeholders y botón: tonos oscuros #24211A, #3A352B, #50493C, #1B2E29, #29463E, #375B51
+   ========================================================================== */
+
+.contact-composer--iso {
+  background-color: var(--palette-earth-100);
+  border: 1px solid rgba(183, 176, 158, 0.72);
+  border-radius: var(--radius-draft);
+  padding: 1.45rem;
+  display: grid;
+  gap: 1.05rem;
+  overflow: hidden;
+}
+
+.composer-subcopy {
+  font-size: 0.89rem;
+  color: var(--ink-earth-800);
+}
+
+/* Escenario limpio mate (sin rejilla competidora ni bordes punteados) */
+.iso-stage {
+  --iso-depth: 26px;
+  --iso-shift: -18px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  padding: 3.1rem 1rem 2.35rem calc(var(--iso-depth) + 1.65rem);
+  background-color: rgba(222, 214, 193, 0.55);
+  border: 1px solid rgba(183, 176, 158, 0.45);
+  border-radius: var(--radius-draft);
+}
+
+/* Estructura base .wrapper adaptada con ancho responsivo */
+.iso-wrapper {
+  position: relative;
+  width: min(100%, 360px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  transform: skewY(-14deg);
+}
+
+.iso-wrapper .iso-step {
+  position: relative;
+  list-style: none;
+  width: 100%;
+  height: 48px;
+  z-index: var(--i);
+  transition: transform 300ms var(--ease-draft);
+}
+
+.iso-wrapper .iso-step--message {
+  height: 54px;
+}
+
+/* Bisel lateral izquierdo (45deg) */
+.iso-wrapper .iso-step::before {
+  position: absolute;
+  content: "";
+  top: 0;
+  left: calc(var(--iso-depth) * -1);
+  width: var(--iso-depth);
+  height: 100%;
+  transform-origin: right;
+  transform: skewY(45deg);
+  border-top: 1px solid rgba(183, 176, 158, 0.55);
+  border-bottom: 1px solid rgba(183, 176, 158, 0.55);
+  border-left: 1px solid rgba(183, 176, 158, 0.65);
+  transition: background-color 300ms ease, border-color 300ms ease;
+  pointer-events: none;
+}
+
+/* Bisel superior (45deg) */
+.iso-wrapper .iso-step::after {
+  position: absolute;
+  content: "";
+  top: calc(var(--iso-depth) * -1);
+  left: 0;
+  width: 100%;
+  height: var(--iso-depth);
+  transform-origin: bottom;
+  transform: skewX(45deg);
+  border-top: 1px solid rgba(183, 176, 158, 0.65);
+  border-left: 1px solid rgba(183, 176, 158, 0.55);
+  border-right: 1px solid rgba(183, 176, 158, 0.55);
+  transition: background-color 300ms ease, border-color 300ms ease;
+  pointer-events: none;
+}
+
+/* Inputs y botón dentro de los escalones isométricos */
+.iso-input,
+.iso-submit {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  padding: 0.65rem 0.9rem;
+  font-family: var(--font-sans);
+  font-size: 0.92rem;
+  border: 1px solid var(--palette-earth-400);
+  outline: none;
+  border-radius: 0;
+  transition:
+    background-color 260ms ease,
+    box-shadow 220ms ease,
+    border-color 220ms ease,
+    color 220ms ease;
+}
+
+.iso-input {
+  font-weight: 500;
+  color: var(--ink-earth-950);
+}
+
+.iso-input::placeholder {
+  color: var(--ink-earth-700);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  opacity: 1;
+}
+
+/* Escalón 1 (Nombre): Papel cálido claro #EBE2CC */
+.iso-wrapper .iso-step:nth-child(1) .iso-input {
+  background-color: var(--palette-earth-100);
+  color: var(--ink-earth-950);
+}
+
+.iso-wrapper .iso-step:nth-child(1)::after {
+  background-color: var(--palette-earth-200);
+}
+
+.iso-wrapper .iso-step:nth-child(1)::before {
+  background-color: var(--palette-earth-300);
+}
+
+/* Escalón 2 (Teléfono / Organización): Ficha cálida #DED6C1 */
+.iso-wrapper .iso-step:nth-child(2) .iso-input {
+  background-color: var(--palette-earth-200);
+  color: var(--ink-earth-950);
+}
+
+.iso-wrapper .iso-step:nth-child(2)::after {
+  background-color: var(--palette-earth-100);
+}
+
+.iso-wrapper .iso-step:nth-child(2)::before {
+  background-color: var(--palette-earth-400);
+}
+
+/* Escalón 3 (E-mail): Hoja salvia clara #E6F2DD */
+.iso-wrapper .iso-step:nth-child(3) .iso-input {
+  background-color: var(--palette-sage-100);
+  color: var(--ink-sage-950);
+  border-color: var(--palette-sage-300);
+}
+
+.iso-wrapper .iso-step:nth-child(3) .iso-input::placeholder {
+  color: var(--ink-sage-700);
+}
+
+.iso-wrapper .iso-step:nth-child(3)::after {
+  background-color: var(--palette-sage-100);
+  border-color: var(--palette-sage-300);
+}
+
+.iso-wrapper .iso-step:nth-child(3)::before {
+  background-color: var(--palette-sage-200);
+  border-color: var(--palette-sage-300);
+}
+
+/* Escalón 4 (Alcance / Mensaje): Salvia suave #B1D3B9 con frente claro #E6F2DD */
+.iso-wrapper .iso-step:nth-child(4) .iso-input {
+  background-color: var(--palette-earth-100);
+  color: var(--ink-sage-950);
+  border-color: var(--palette-sage-400);
+}
+
+.iso-wrapper .iso-step:nth-child(4) .iso-input::placeholder {
+  color: var(--ink-sage-700);
+}
+
+.iso-wrapper .iso-step:nth-child(4)::after {
+  background-color: var(--palette-sage-200);
+  border-color: var(--palette-sage-400);
+}
+
+.iso-wrapper .iso-step:nth-child(4)::before {
+  background-color: var(--palette-sage-300);
+  border-color: var(--palette-sage-400);
+}
+
+/* Enfoque de alto contraste sin alterar dimensiones de caja */
+.iso-wrapper .iso-step:nth-child(1) .iso-input:focus,
+.iso-wrapper .iso-step:nth-child(2) .iso-input:focus,
+.iso-wrapper .iso-step:nth-child(3) .iso-input:focus,
+.iso-wrapper .iso-step:nth-child(4) .iso-input:focus {
+  background-color: var(--palette-sage-100);
+  border-color: var(--ink-sage-800);
+  box-shadow: inset 0 0 0 2.5px var(--ink-sage-800);
+}
+
+/* Escalón 5 (Botón Submit): Superficie salvia #B1D3B9 -> #88BDA4 con texto oscuro profundo #1B2E29 */
+.iso-wrapper .iso-step--submit::after {
+  background-color: var(--palette-sage-300);
+  border-color: var(--palette-sage-400);
+}
+
+.iso-wrapper .iso-step--submit::before {
+  background-color: var(--palette-sage-400);
+  border-color: var(--ink-sage-800);
+}
+
+.iso-submit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  background-color: var(--palette-sage-200);
+  color: var(--ink-sage-950);
+  border: 1.5px solid var(--ink-sage-800);
+  cursor: pointer;
+}
+
+.iso-submit__arrow {
+  font-size: 1rem;
+  line-height: 1;
+  color: var(--ink-sage-950);
+  transition: transform 220ms var(--ease-draft);
+}
+
+/* Desplazamiento lateral isométrico en hover y focus-within */
+.iso-wrapper .iso-step:hover,
+.iso-wrapper .iso-step:focus-within {
+  transform: translateX(var(--iso-shift));
+}
+
+.iso-wrapper .iso-step--submit:hover .iso-submit,
+.iso-wrapper .iso-step--submit:focus-within .iso-submit {
+  background-color: var(--palette-sage-300);
+  color: var(--ink-sage-950);
+  border-color: var(--ink-sage-950);
+}
+
+.iso-wrapper .iso-step--submit:hover .iso-submit__arrow,
+.iso-wrapper .iso-step--submit:focus-within .iso-submit__arrow {
+  transform: translateX(4px);
+}
+
+.iso-wrapper .iso-step--submit:hover::after,
+.iso-wrapper .iso-step--submit:focus-within::after {
+  background-color: var(--palette-sage-400);
+}
+
+.iso-wrapper .iso-step--submit:hover::before,
+.iso-wrapper .iso-step--submit:focus-within::before {
+  background-color: var(--ink-sage-800);
+}
+
+.iso-wrapper .iso-step--submit:active {
+  transform: translateX(0px);
+}
+
+.iso-submit:focus-visible {
+  box-shadow: inset 0 0 0 2.5px var(--ink-sage-950);
+}
+
+/* Pie de controles complementarios debajo de la pila isométrica */
+.composer-footer-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding-top: 0.65rem;
+  border-top: 1px solid rgba(183, 176, 158, 0.4);
+}
+
+.composer-footer-note {
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  color: var(--ink-earth-700);
+}
+
+@media (max-width: 560px) {
+  .contact-composer--iso {
+    padding: 1rem;
+  }
+
+  .iso-stage {
+    --iso-depth: 16px;
+    --iso-shift: -8px;
+    padding: 2.75rem 0.75rem 2rem calc(var(--iso-depth) + 1rem);
+  }
+
+  .iso-wrapper {
+    transform: skewY(-7deg);
+  }
+
+  .iso-wrapper .iso-step {
+    height: 46px;
+  }
+
+  .iso-wrapper .iso-step--message {
+    height: 50px;
+  }
+
+  .iso-input,
+  .iso-submit {
+    padding: 0.55rem 0.75rem;
+    font-size: 0.88rem;
+  }
+
+  .iso-input::placeholder {
+    font-size: 0.74rem;
+  }
+
+  .composer-footer-bar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .composer-footer-bar .btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 390px) {
+  .iso-stage {
+    --iso-depth: 12px;
+    --iso-shift: -6px;
+    padding: 2.2rem 0.5rem 1.65rem calc(var(--iso-depth) + 0.75rem);
+  }
+
+  .iso-wrapper {
+    transform: skewY(-5deg);
+  }
+
+  .iso-submit {
+    font-size: 0.78rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .iso-wrapper .iso-step,
+  .iso-wrapper .iso-step::before,
+  .iso-wrapper .iso-step::after,
+  .iso-input,
+  .iso-submit,
+  .iso-submit__arrow {
+    transition: none !important;
+  }
+
+  .iso-wrapper .iso-step:hover,
+  .iso-wrapper .iso-step:focus-within {
+    transform: none !important;
+  }
+}

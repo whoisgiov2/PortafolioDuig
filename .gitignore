@@ -1,58 +1,7 @@
-# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-# DE VSECOPS HARDENED GITIGNORE — PORTAFOLIO GIOVANNI REYES
-# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# Archivos temporales del agente
+.agent-tmp/
+agent_test_*
 
-# ── Dependencies & Package Managers ──
-node_modules/
-.pnpm-store/
-
-# ── Production Builds & Outputs ──
-dist/
-dist-ssr/
-build/
-out/
-
-# ── Environment & Secrets ──
-.env
-.env.*
-!.env.example
-*.local
-
-# ── System & Editor Files ──
+# Archivos del sistema
 .DS_Store
 Thumbs.db
-.vscode/*
-!.vscode/extensions.json
-.idea/
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
-*.bak
-*.tmp
-
-# ── Logs & Debug Outputs ──
-logs/
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-lerna-debug.log*
-
-# ── AI, Agent, Taste & Skill Infrastructure ──
-.impeccable/
-.agents/
-.gemini/
-.cursor/
-.claude/
-skills/
-skills-lock.json
-
-# ── Internal Documentation & Audit Reports ──
-audit_report.md
-SKILL.md
-DESIGN.md
-PRODUCT.md
-PROFILE.md

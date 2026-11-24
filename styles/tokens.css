@@ -1,0 +1,63 @@
+/* ==========================================================================
+   TOKENS DE DISEÑO — ESTÉTICA DRAFT (PALETA ESTRICTA)
+   Paleta base autorizada:
+   #B7B09E, #CFC6B1, #DED6C1, #EBE2CC, #E6F2DD, #B1D3B9, #88BDA4, #659287
+   Textos e ink: derivados profundos de la gama cálida/tierra y de #659287
+   para garantizar contraste WCAG AA/AAA sobre superficies claras.
+   ========================================================================== */
+
+:root {
+  /* Paleta exacta para superficies, capas, marcos, rejillas y acentos */
+  --palette-earth-400: #B7B09E;
+  --palette-earth-300: #CFC6B1;
+  --palette-earth-200: #DED6C1;
+  --palette-earth-100: #EBE2CC;
+
+  --palette-sage-100: #E6F2DD;
+  --palette-sage-200: #B1D3B9;
+  --palette-sage-300: #88BDA4;
+  --palette-sage-400: #659287;
+
+  /* Tonos más oscuros derivados estrictamente de ambas familias para texto y trazos */
+  --ink-earth-950: #24211A;
+  /* Títulos principales sobre papel cálido */
+  --ink-earth-800: #3A352B;
+  /* Texto de cuerpo y descripciones */
+  --ink-earth-700: #50493C;
+  /* Metadatos y etiquetas secundarias */
+
+  --ink-sage-950: #1B2E29;
+  /* Títulos/valores de máximo contraste en acento */
+  --ink-sage-800: #29463E;
+  /* Subtítulos, enlaces y acentos tipográficos */
+  --ink-sage-700: #375B51;
+  /* Etiquetas técnicas y trazos de énfasis */
+
+  /* Roles semánticos */
+  --bg-canvas: var(--palette-earth-100);
+  --bg-section-alt: var(--palette-earth-200);
+  --bg-card: var(--palette-earth-200);
+  --bg-card-elevated: var(--palette-earth-100);
+  --bg-mint-sheet: var(--palette-sage-100);
+  --bg-mint-tag: var(--palette-sage-200);
+
+  --border-hairline: var(--palette-earth-400);
+  --border-grid: var(--palette-earth-300);
+  --border-sage: var(--palette-sage-400);
+
+  /* Tipografía */
+  --font-display: 'Space Grotesk', 'IBM Plex Sans', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --font-sans: 'IBM Plex Sans', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --font-mono: 'IBM Plex Mono', 'Cascadia Mono', 'Consolas', monospace;
+
+  /* Escala y radios */
+  --radius-draft: 8px;
+  --radius-pill: 999px;
+  --header-height: 68px;
+  --container-max: 1120px;
+
+  /* Curvas y tiempos */
+  --ease-draft: cubic-bezier(0.22, 1, 0.36, 1);
+  --duration-fast: 180ms;
+  --duration-enter: 520ms;
+}

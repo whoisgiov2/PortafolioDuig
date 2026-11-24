@@ -1,0 +1,333 @@
+/* ==========================================================================
+   COMPONENTE DE DESCARGA DE CV ADAPTADO A ESTÉTICA DRAFT
+   Base: Uiverse.io by nazar-gavrylyk, encapsulado bajo .cv-download para evitar
+   colisiones con .container o .input, y adaptado estrictamente a la paleta:
+   Superficies/acentos: #EBE2CC, #DED6C1, #CFC6B1, #B7B09E, #E6F2DD, #B1D3B9, #88BDA4, #659287
+   Textos e iconos oscuros: #24211A, #3A352B, #50493C y #1B2E29, #29463E, #375B51
+   ========================================================================== */
+
+.cv-download {
+  position: relative;
+  max-width: 100%;
+  padding: 0;
+  margin: 0;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  vertical-align: middle;
+}
+
+.cv-download__label {
+  background-color: var(--palette-earth-100);
+  border: 2px solid var(--palette-sage-400);
+  display: flex;
+  align-items: center;
+  border-radius: var(--radius-pill);
+  width: 188px;
+  height: 52px;
+  cursor: pointer;
+  transition:
+    width 0.4s var(--ease-draft),
+    background-color 0.3s ease,
+    border-color 0.3s ease,
+    transform 0.2s ease;
+  padding: 4px;
+  position: relative;
+  user-select: none;
+}
+
+.cv-download__label:hover {
+  background-color: var(--palette-sage-100);
+  border-color: var(--ink-sage-800);
+  transform: translate3d(0, -1px, 0);
+}
+
+.cv-download__label:has(.cv-download__input:focus-visible) {
+  outline: 2.5px solid var(--ink-sage-800);
+  outline-offset: 3px;
+}
+
+/* Punto orbital durante la secuencia completa de descarga */
+.cv-download__label::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-color: var(--ink-sage-800);
+  width: 8px;
+  height: 8px;
+  transition: all 0.4s ease;
+  border-radius: 50%;
+  margin: auto;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* Checkbox accesible por teclado sin afectar el layout visual */
+.cv-download__input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  opacity: 0;
+  clip: rect(0, 0, 0, 0);
+}
+
+/* Textos de estado en verde bosque profundo (#1B2E29) sobre fondos claros */
+.cv-download__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 0.94rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--ink-sage-950);
+  transition: all 0.35s ease;
+  position: absolute;
+  right: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  text-align: center;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.cv-download__title--open {
+  opacity: 0;
+  visibility: hidden;
+  right: 0;
+  left: 0;
+}
+
+/* Enlace nativo superpuesto para abrir la visualización en una pestaña/ventana nueva
+   únicamente cuando la animación de descarga ya concluyó por completo */
+.cv-download__open-anchor {
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+  border-radius: var(--radius-pill);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  text-decoration: none;
+}
+
+.cv-download.is-ready-open .cv-download__open-anchor {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+.cv-download__open-anchor:focus-visible {
+  outline: 2.5px solid var(--ink-sage-800);
+  outline-offset: 3px;
+}
+
+.cv-download.is-ready-open:hover .cv-download__label {
+  background-color: var(--palette-sage-300);
+  border-color: var(--ink-sage-950);
+  transform: translate3d(0, -1px, 0);
+}
+
+/* Círculo de acción */
+.cv-download__circle {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  background-color: var(--palette-sage-200);
+  border: 1px solid var(--palette-sage-400);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.4s ease;
+  position: relative;
+  box-shadow: 0 0 0 0 rgba(101, 146, 135, 0);
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.cv-download__label:hover .cv-download__circle {
+  background-color: var(--palette-sage-300);
+  border-color: var(--ink-sage-800);
+}
+
+.cv-download__icon {
+  color: var(--ink-sage-950);
+  width: 22px;
+  height: 22px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: all 0.35s ease;
+}
+
+.cv-download__square {
+  aspect-ratio: 1;
+  width: 13px;
+  border-radius: 2px;
+  background-color: var(--ink-sage-950);
+  opacity: 0;
+  visibility: hidden;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: all 0.35s ease;
+}
+
+.cv-download__circle::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  background-color: var(--palette-sage-300);
+  width: 100%;
+  height: 0;
+  transition: all 0.4s ease;
+}
+
+/* Secuencia completa de 3.5s fiel al componente base antes de pasar a "Abrir CV" */
+.cv-download__label:has(.cv-download__input:checked) {
+  width: 52px;
+  background-color: var(--palette-sage-100);
+  animation: cv-installed 0.4s var(--ease-draft) 3.5s forwards;
+}
+
+.cv-download__label:has(.cv-download__input:checked)::before {
+  animation: cv-orbit 3s ease-in-out 0.4s forwards;
+}
+
+.cv-download__input:checked + .cv-download__circle {
+  animation:
+    cv-pulse 1s forwards,
+    cv-circle-hide 0.2s ease 3.5s forwards;
+  rotate: 180deg;
+}
+
+.cv-download__input:checked + .cv-download__circle::before {
+  animation: cv-installing 3s ease-in-out forwards;
+}
+
+.cv-download__input:checked + .cv-download__circle .cv-download__icon {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.cv-download__input:checked ~ .cv-download__circle .cv-download__square {
+  opacity: 1;
+  visibility: visible;
+}
+
+.cv-download__input:checked ~ .cv-download__title {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.cv-download__input:checked ~ .cv-download__title--open {
+  animation: cv-show-open 0.4s var(--ease-draft) 3.5s forwards;
+}
+
+@keyframes cv-pulse {
+  0% {
+    scale: 0.95;
+    box-shadow: 0 0 0 0 rgba(101, 146, 135, 0.65);
+  }
+  70% {
+    scale: 1;
+    box-shadow: 0 0 0 14px rgba(101, 146, 135, 0);
+  }
+  100% {
+    scale: 0.95;
+    box-shadow: 0 0 0 0 rgba(101, 146, 135, 0);
+  }
+}
+
+@keyframes cv-installing {
+  from {
+    height: 0;
+  }
+  to {
+    height: 100%;
+  }
+}
+
+@keyframes cv-orbit {
+  0% {
+    transform: rotate(-90deg) translate(25px) rotate(0);
+    opacity: 1;
+    visibility: visible;
+  }
+  99% {
+    transform: rotate(270deg) translate(25px) rotate(270deg);
+    opacity: 1;
+    visibility: visible;
+  }
+  100% {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+@keyframes cv-installed {
+  100% {
+    width: 158px;
+    background-color: var(--palette-sage-200);
+    border-color: var(--ink-sage-800);
+  }
+}
+
+@keyframes cv-circle-hide {
+  100% {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+@keyframes cv-show-open {
+  100% {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cv-download__label,
+  .cv-download__label:hover,
+  .cv-download__circle,
+  .cv-download__icon,
+  .cv-download__square,
+  .cv-download__title {
+    transition: none !important;
+    transform: none !important;
+  }
+
+  .cv-download__title {
+    transform: translateY(-50%) !important;
+  }
+
+  .cv-download__label:has(.cv-download__input:checked) {
+    width: 158px;
+    background-color: var(--palette-sage-200);
+    border-color: var(--ink-sage-800);
+    animation: none !important;
+  }
+
+  .cv-download__label:has(.cv-download__input:checked)::before {
+    animation: none !important;
+  }
+
+  .cv-download__input:checked + .cv-download__circle {
+    animation: none !important;
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  .cv-download__input:checked ~ .cv-download__title--open {
+    animation: none !important;
+    opacity: 1;
+    visibility: visible;
+  }
+}

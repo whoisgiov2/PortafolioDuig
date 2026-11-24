@@ -1,0 +1,419 @@
+/* ==========================================================================
+   COMPONENTE DE CARGA ADAPTADO A ESTÉTICA DRAFT
+   Base: Uiverse.io by andrew-manzyk, adaptado estrictamente a la paleta:
+   Superficies/acentos: #EBE2CC, #DED6C1, #CFC6B1, #B7B09E, #E6F2DD, #B1D3B9, #88BDA4, #659287
+   Letras y trazos oscuros: #1B2E29, #29463E (familia #659287) y #24211A, #50493C (familia #B7B09E)
+   ========================================================================== */
+
+/* Overlay de carga inicial tipo hoja de especificación Draft */
+.draft-preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  background-color: rgba(235, 226, 204, 0.96);
+  backdrop-filter: blur(8px);
+  opacity: 1;
+  transition: opacity 380ms var(--ease-draft);
+}
+
+.draft-preloader__sheet {
+  width: min(100%, 420px);
+  background-color: var(--palette-earth-100);
+  border: 1px solid rgba(183, 176, 158, 0.75);
+  border-radius: var(--radius-draft);
+  box-shadow: 0 18px 40px rgba(36, 33, 26, 0.1);
+  overflow: hidden;
+  transform-origin: center center;
+  transform: scale(1);
+  transition:
+    transform 380ms var(--ease-draft),
+    opacity 340ms ease;
+}
+
+/* Salida alineada con el sistema: desvanecimiento + contracción hacia el centro */
+.draft-preloader.is-leaving {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.draft-preloader.is-leaving .draft-preloader__sheet {
+  transform: scale(0.89);
+  opacity: 0;
+}
+
+.draft-preloader[hidden] {
+  display: none !important;
+}
+
+.draft-preloader__stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  padding: 2rem 1.25rem 1.5rem;
+  background-color: rgba(222, 214, 193, 0.55);
+  border-bottom: 1px solid rgba(183, 176, 158, 0.45);
+}
+
+.preloader-emblem {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background-color: var(--palette-sage-100);
+  border: 1px solid var(--palette-sage-300);
+  color: var(--ink-sage-800);
+}
+
+.preloader-emblem svg {
+  width: 20px;
+  height: 20px;
+}
+
+.draft-preloader__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.75rem 1.15rem;
+  background-color: var(--palette-earth-100);
+}
+
+.draft-preloader__caption {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--ink-earth-800);
+}
+
+/* ==========================================================================
+   BASE .loader ADAPTADA (From Uiverse.io by andrew-manzyk)
+   ========================================================================== */
+.loader {
+  --main-size: clamp(2rem, 8.2vw, 3.7rem);
+  --text-color: var(--ink-sage-950);          /* #1B2E29 oscuro profundo legible */
+  --shine-color: rgba(101, 146, 135, 0.28);   /* Halo sutil derivado de #659287 */
+  --shadow-color: var(--ink-earth-700);       /* #50493C tierra oscuro legible */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  user-select: none;
+  position: relative;
+  font-family: var(--font-display);
+  font-size: var(--main-size);
+  font-weight: 900;
+  text-transform: uppercase;
+  color: var(--text-color);
+  width: 7.3em;
+  max-width: 100%;
+  height: 1.08em;
+  filter: drop-shadow(0 0 0.04em var(--shine-color));
+}
+
+.loader--compact {
+  --main-size: clamp(1.35rem, 5.4vw, 2.2rem);
+  --text-color: var(--ink-sage-950);
+  --shadow-color: var(--ink-earth-800);
+}
+
+.loader .text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  position: absolute;
+}
+
+.loader .text:nth-child(1) {
+  clip-path: polygon(0% 0%, 11.11% 0%, 11.11% 100%, 0% 100%);
+  font-size: calc(var(--main-size) / 20);
+  margin-left: -2.1em;
+  opacity: 0.68;
+}
+
+.loader .text:nth-child(2) {
+  clip-path: polygon(11.11% 0%, 22.22% 0%, 22.22% 100%, 11.11% 100%);
+  font-size: calc(var(--main-size) / 16);
+  margin-left: -0.98em;
+  opacity: 0.76;
+}
+
+.loader .text:nth-child(3) {
+  clip-path: polygon(22.22% 0%, 33.33% 0%, 33.33% 100%, 22.22% 100%);
+  font-size: calc(var(--main-size) / 13);
+  margin-left: -0.33em;
+  opacity: 0.84;
+}
+
+.loader .text:nth-child(4) {
+  clip-path: polygon(33.33% 0%, 44.44% 0%, 44.44% 100%, 33.33% 100%);
+  font-size: calc(var(--main-size) / 11);
+  margin-left: -0.05em;
+  opacity: 0.92;
+}
+
+.loader .text:nth-child(5) {
+  clip-path: polygon(44.44% 0%, 55.55% 0%, 55.55% 100%, 44.44% 100%);
+  font-size: calc(var(--main-size) / 10);
+  margin-left: 0em;
+  opacity: 1;
+}
+
+.loader .text:nth-child(6) {
+  clip-path: polygon(55.55% 0%, 66.66% 0%, 66.66% 100%, 55.55% 100%);
+  font-size: calc(var(--main-size) / 11);
+  margin-left: 0.05em;
+  opacity: 0.92;
+}
+
+.loader .text:nth-child(7) {
+  clip-path: polygon(66.66% 0%, 77.77% 0%, 77.77% 100%, 66.66% 100%);
+  font-size: calc(var(--main-size) / 13);
+  margin-left: 0.33em;
+  opacity: 0.84;
+}
+
+.loader .text:nth-child(8) {
+  clip-path: polygon(77.77% 0%, 88.88% 0%, 88.88% 100%, 77.77% 100%);
+  font-size: calc(var(--main-size) / 16);
+  margin-left: 0.98em;
+  opacity: 0.76;
+}
+
+.loader .text:nth-child(9) {
+  clip-path: polygon(88.88% 0%, 100% 0%, 100% 100%, 88.88% 100%);
+  font-size: calc(var(--main-size) / 20);
+  margin-left: 2.1em;
+  opacity: 0.68;
+}
+
+.loader .text span {
+  display: inline-block;
+  animation:
+    scrolling 2s cubic-bezier(0.1, 0.6, 0.9, 0.4) infinite,
+    shadow 2s cubic-bezier(0.1, 0.6, 0.9, 0.4) infinite;
+}
+
+.loader .text:nth-child(1) span {
+  background: linear-gradient(
+    to right,
+    var(--text-color) 4%,
+    var(--shadow-color) 7%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.loader .text:nth-child(2) span {
+  background: linear-gradient(
+    to right,
+    var(--text-color) 9%,
+    var(--shadow-color) 13%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.loader .text:nth-child(3) span {
+  background: linear-gradient(
+    to right,
+    var(--text-color) 15%,
+    var(--shadow-color) 18%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.loader .text:nth-child(4) span {
+  background: linear-gradient(
+    to right,
+    var(--text-color) 20%,
+    var(--shadow-color) 23%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.loader .text:nth-child(6) span {
+  background: linear-gradient(
+    to right,
+    var(--shadow-color) 29%,
+    var(--text-color) 32%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.loader .text:nth-child(7) span {
+  background: linear-gradient(
+    to right,
+    var(--shadow-color) 34%,
+    var(--text-color) 37%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.loader .text:nth-child(8) span {
+  background: linear-gradient(
+    to right,
+    var(--shadow-color) 39%,
+    var(--text-color) 42%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.loader .text:nth-child(9) span {
+  background: linear-gradient(
+    to right,
+    var(--shadow-color) 45%,
+    var(--text-color) 48%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.loader .line {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  height: 0.05em;
+  width: calc(var(--main-size) / 2);
+  margin-top: 0.9em;
+  border-radius: 0.05em;
+}
+
+.loader .line::before {
+  content: "";
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background-color: var(--palette-earth-400);
+  opacity: 0.65;
+}
+
+.loader .line::after {
+  content: "";
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background-color: var(--ink-sage-800);
+  border-radius: 0.05em;
+  transform: translateX(-90%);
+  animation: wobble 2s cubic-bezier(0.5, 0.8, 0.5, 0.2) infinite;
+}
+
+/* Pausa limpia en el verificador en línea cuando ya completó su ciclo,
+   reactivándose al interactuar o verificar el canal */
+.loader--compact.is-resting .text span,
+.loader--compact.is-resting .line::after {
+  animation-play-state: paused;
+}
+
+.channel-card--loader:hover .loader--compact.is-resting .text span,
+.channel-card--loader:hover .loader--compact.is-resting .line::after,
+.channel-card--loader:focus-within .loader--compact.is-resting .text span,
+.channel-card--loader:focus-within .loader--compact.is-resting .line::after {
+  animation-play-state: running;
+}
+
+@keyframes wobble {
+  0% {
+    transform: translateX(-90%);
+  }
+  50% {
+    transform: translateX(90%);
+  }
+  100% {
+    transform: translateX(-90%);
+  }
+}
+
+@keyframes scrolling {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes shadow {
+  0% {
+    background-position: -98% 0;
+  }
+  100% {
+    background-position: 102% 0;
+  }
+}
+
+@media (max-width: 520px) {
+  .draft-preloader {
+    padding: 1rem;
+  }
+
+  .draft-preloader__strip {
+    flex-wrap: wrap;
+    padding: 0.55rem 0.9rem;
+  }
+
+  .draft-preloader__stage {
+    padding: 1.4rem 0.75rem 1.15rem;
+  }
+
+  .draft-preloader__footer {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 0.75rem 0.9rem;
+  }
+
+  .loader-inline-stage {
+    flex-direction: column;
+    align-items: center;
+    padding: 0.65rem 0.7rem;
+  }
+
+  .loader-inline-stage .btn {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .draft-preloader {
+    transition: none !important;
+  }
+
+  .loader .text span,
+  .loader .line::after {
+    animation: none !important;
+    transform: none !important;
+  }
+}
