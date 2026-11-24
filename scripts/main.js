@@ -122,6 +122,10 @@
       DraftPortfolio.renderAll();
     }
 
+    if (typeof DraftPortfolio.initCertTicketModal === 'function') {
+      DraftPortfolio.initCertTicketModal();
+    }
+
     syncExternalLinks();
     initMobileNav();
 

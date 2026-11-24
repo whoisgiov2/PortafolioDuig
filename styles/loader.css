@@ -97,9 +97,12 @@
    ========================================================================== */
 .loader {
   --main-size: clamp(2rem, 8.2vw, 3.7rem);
-  --text-color: var(--ink-sage-950);          /* #1B2E29 oscuro profundo legible */
-  --shine-color: rgba(101, 146, 135, 0.28);   /* Halo sutil derivado de #659287 */
-  --shadow-color: var(--ink-earth-700);       /* #50493C tierra oscuro legible */
+  --text-color: var(--ink-sage-950);
+  /* #1B2E29 oscuro profundo legible */
+  --shine-color: rgba(101, 146, 135, 0.28);
+  /* Halo sutil derivado de #659287 */
+  --shadow-color: var(--ink-earth-700);
+  /* #50493C tierra oscuro legible */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -115,12 +118,6 @@
   max-width: 100%;
   height: 1.08em;
   filter: drop-shadow(0 0 0.04em var(--shine-color));
-}
-
-.loader--compact {
-  --main-size: clamp(1.35rem, 5.4vw, 2.2rem);
-  --text-color: var(--ink-sage-950);
-  --shadow-color: var(--ink-earth-800);
 }
 
 .loader .text {
@@ -204,11 +201,9 @@
 }
 
 .loader .text:nth-child(1) span {
-  background: linear-gradient(
-    to right,
-    var(--text-color) 4%,
-    var(--shadow-color) 7%
-  );
+  background: linear-gradient(to right,
+      var(--text-color) 4%,
+      var(--shadow-color) 7%);
   background-size: 200% auto;
   -webkit-background-clip: text;
   background-clip: text;
@@ -216,11 +211,9 @@
 }
 
 .loader .text:nth-child(2) span {
-  background: linear-gradient(
-    to right,
-    var(--text-color) 9%,
-    var(--shadow-color) 13%
-  );
+  background: linear-gradient(to right,
+      var(--text-color) 9%,
+      var(--shadow-color) 13%);
   background-size: 200% auto;
   -webkit-background-clip: text;
   background-clip: text;
@@ -228,11 +221,9 @@
 }
 
 .loader .text:nth-child(3) span {
-  background: linear-gradient(
-    to right,
-    var(--text-color) 15%,
-    var(--shadow-color) 18%
-  );
+  background: linear-gradient(to right,
+      var(--text-color) 15%,
+      var(--shadow-color) 18%);
   background-size: 200% auto;
   -webkit-background-clip: text;
   background-clip: text;
@@ -240,11 +231,9 @@
 }
 
 .loader .text:nth-child(4) span {
-  background: linear-gradient(
-    to right,
-    var(--text-color) 20%,
-    var(--shadow-color) 23%
-  );
+  background: linear-gradient(to right,
+      var(--text-color) 20%,
+      var(--shadow-color) 23%);
   background-size: 200% auto;
   -webkit-background-clip: text;
   background-clip: text;
@@ -252,11 +241,9 @@
 }
 
 .loader .text:nth-child(6) span {
-  background: linear-gradient(
-    to right,
-    var(--shadow-color) 29%,
-    var(--text-color) 32%
-  );
+  background: linear-gradient(to right,
+      var(--shadow-color) 29%,
+      var(--text-color) 32%);
   background-size: 200% auto;
   -webkit-background-clip: text;
   background-clip: text;
@@ -264,11 +251,9 @@
 }
 
 .loader .text:nth-child(7) span {
-  background: linear-gradient(
-    to right,
-    var(--shadow-color) 34%,
-    var(--text-color) 37%
-  );
+  background: linear-gradient(to right,
+      var(--shadow-color) 34%,
+      var(--text-color) 37%);
   background-size: 200% auto;
   -webkit-background-clip: text;
   background-clip: text;
@@ -276,11 +261,9 @@
 }
 
 .loader .text:nth-child(8) span {
-  background: linear-gradient(
-    to right,
-    var(--shadow-color) 39%,
-    var(--text-color) 42%
-  );
+  background: linear-gradient(to right,
+      var(--shadow-color) 39%,
+      var(--text-color) 42%);
   background-size: 200% auto;
   -webkit-background-clip: text;
   background-clip: text;
@@ -288,11 +271,9 @@
 }
 
 .loader .text:nth-child(9) span {
-  background: linear-gradient(
-    to right,
-    var(--shadow-color) 45%,
-    var(--text-color) 48%
-  );
+  background: linear-gradient(to right,
+      var(--shadow-color) 45%,
+      var(--text-color) 48%);
   background-size: 200% auto;
   -webkit-background-clip: text;
   background-clip: text;
@@ -331,27 +312,15 @@
   animation: wobble 2s cubic-bezier(0.5, 0.8, 0.5, 0.2) infinite;
 }
 
-/* Pausa limpia en el verificador en línea cuando ya completó su ciclo,
-   reactivándose al interactuar o verificar el canal */
-.loader--compact.is-resting .text span,
-.loader--compact.is-resting .line::after {
-  animation-play-state: paused;
-}
-
-.channel-card--loader:hover .loader--compact.is-resting .text span,
-.channel-card--loader:hover .loader--compact.is-resting .line::after,
-.channel-card--loader:focus-within .loader--compact.is-resting .text span,
-.channel-card--loader:focus-within .loader--compact.is-resting .line::after {
-  animation-play-state: running;
-}
-
 @keyframes wobble {
   0% {
     transform: translateX(-90%);
   }
+
   50% {
     transform: translateX(90%);
   }
+
   100% {
     transform: translateX(-90%);
   }
@@ -361,6 +330,7 @@
   0% {
     transform: translateX(-100%);
   }
+
   100% {
     transform: translateX(100%);
   }
@@ -370,6 +340,7 @@
   0% {
     background-position: -98% 0;
   }
+
   100% {
     background-position: 102% 0;
   }
@@ -380,11 +351,6 @@
     padding: 1rem;
   }
 
-  .draft-preloader__strip {
-    flex-wrap: wrap;
-    padding: 0.55rem 0.9rem;
-  }
-
   .draft-preloader__stage {
     padding: 1.4rem 0.75rem 1.15rem;
   }
@@ -393,16 +359,6 @@
     flex-direction: column;
     align-items: stretch;
     padding: 0.75rem 0.9rem;
-  }
-
-  .loader-inline-stage {
-    flex-direction: column;
-    align-items: center;
-    padding: 0.65rem 0.7rem;
-  }
-
-  .loader-inline-stage .btn {
-    width: 100%;
   }
 }
 

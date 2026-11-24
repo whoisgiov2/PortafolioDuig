@@ -141,17 +141,42 @@
     if (!container || !Array.isArray(certifications)) return;
     const fragment = document.createDocumentFragment();
 
-    certifications.forEach((cert) => {
-      const card = createEl('article', 'cert-card interactive-sheet');
+    certifications.forEach((cert, idx) => {
+      const card = createEl('article', 'cert-card interactive-sheet cert-card--clickable');
       card.setAttribute('tabindex', '0');
+      card.setAttribute('role', 'button');
+      card.setAttribute('aria-haspopup', 'dialog');
+      card.setAttribute('aria-label', `Inspeccionar ticket 3D de ${cert.title} (${cert.issuer})`);
       card.setAttribute('data-draft-item', '');
       card.setAttribute('data-seq-card', '');
+      card.setAttribute('data-cert-index', String(idx));
 
       const head = createEl('div', 'cert-card__head seq-step seq-step--1');
-      head.appendChild(createEl('span', 'cert-card__issuer', cert.issuer));
-      const sealIcon = createEl('span', 'cert-card__seal-icon');
-      sealIcon.appendChild(getIcon('badge-seal', 'draft-icon--seal'));
-      head.appendChild(sealIcon);
+      const issuerWrap = createEl('div', 'cert-card__issuer-group');
+      const emblem = createEl('span', 'cert-card__emblem');
+      emblem.appendChild(getIcon(cert.issuerIcon || 'badge-seal', 'draft-icon--issuer'));
+      issuerWrap.appendChild(emblem);
+      issuerWrap.appendChild(createEl('span', 'cert-card__issuer', cert.issuer));
+      head.appendChild(issuerWrap);
+
+      if (cert.badgeImage) {
+        const badgeFrame = createEl('span', 'cert-card__badge-frame');
+        const badgeImg = createEl('img', 'cert-card__badge-img');
+        badgeImg.setAttribute('src', cert.badgeImage);
+        badgeImg.setAttribute('alt', `Insignia oficial de ${cert.title}`);
+        badgeImg.setAttribute('width', '48');
+        badgeImg.setAttribute('height', '48');
+        badgeImg.setAttribute('loading', 'lazy');
+        badgeImg.setAttribute('decoding', 'async');
+        badgeImg.setAttribute('draggable', 'false');
+        badgeFrame.appendChild(badgeImg);
+        head.appendChild(badgeFrame);
+      } else {
+        const fallbackFrame = createEl('span', 'cert-card__badge-frame cert-card__badge-frame--fallback');
+        fallbackFrame.setAttribute('aria-hidden', 'true');
+        fallbackFrame.appendChild(getIcon('badge-seal', 'cert-card__badge-svg'));
+        head.appendChild(fallbackFrame);
+      }
 
       const title = createFocalHeading('h3', 'cert-card__title seq-step seq-step--2', cert.title);
       const focus = createEl('p', 'cert-card__focus seq-step seq-step--3', cert.focus);
@@ -160,18 +185,12 @@
       card.appendChild(title);
       card.appendChild(focus);
 
-      if (cert.credentialUrl) {
-        const footer = createEl('div', 'cert-card__footer seq-step seq-step--4');
-        const verifyLink = createEl('a', 'cert-card__verify-link');
-        verifyLink.setAttribute('href', cert.credentialUrl);
-        verifyLink.setAttribute('target', '_blank');
-        verifyLink.setAttribute('rel', 'noopener noreferrer');
-        verifyLink.setAttribute('aria-label', `Verificar credencial ${cert.title} (${cert.issuer})`);
-        verifyLink.appendChild(createEl('span', '', 'Verificar credencial'));
-        verifyLink.appendChild(getIcon('arrow-up-right', 'draft-icon--arrow'));
-        footer.appendChild(verifyLink);
-        card.appendChild(footer);
-      }
+      const footer = createEl('div', 'cert-card__footer seq-step seq-step--4');
+      const inspectLabel = createEl('span', 'cert-card__verify-link');
+      inspectLabel.appendChild(createEl('span', '', 'Inspeccionar ticket 3D'));
+      inspectLabel.appendChild(getIcon('arrow-up-right', 'draft-icon--arrow'));
+      footer.appendChild(inspectLabel);
+      card.appendChild(footer);
 
       fragment.appendChild(card);
     });

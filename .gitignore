@@ -1,3 +1,6 @@
+# Salida de empaquetado bajo demanda
+dist/
+
 # Archivos temporales del agente
 .agent-tmp/
 agent_test_*
